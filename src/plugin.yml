@@ -1,0 +1,11 @@
+## YAML Template.
+---
+name: RPGMaker
+main: com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker.RPGMaker
+version: v1_0_0R1
+commands:
+    rpgmaker:
+        description: Plugin information about RPGMaker
+        usage: /rpgmaker
+        permission: rpgmaker.info
+        permission-message: You do not have permission to use this command
