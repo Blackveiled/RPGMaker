@@ -16,12 +16,12 @@ public class Attributes {
     // Defensive Stats
     public Integer armor;
     public Integer resilience;
-    public double hitChance = 75.00;
-    public double criticalChance = 5.00;
-    public double spellCriticalChance = 5.00;
-    public double dodgeChance = 10;
-    public double resistChance = 10;
-    public double parryChance = 5;
+    public double hitChance;
+    public double criticalChance;
+    public double spellCriticalChance;
+    public double dodgeChance;
+    public double resistChance;
+    public double parryChance;
 
     public Attributes() {
 

@@ -3,13 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.RPGMakerDev.RPGMaker.SpellSystem;
 
-/**
- *
- * @author matthew
- */
 public class SpellEffect {
-    
+
+    public static enum EffectType {
+
+        DAMAGE_OVER_TIME,
+        HEAL_OVER_TIME,
+        STAT_MODIFIER,
+        STATE_MODIFIER,
+        STUN,
+        TELEPORTATION_QUEUE,
+        NORMAL,
+    }
+
 }

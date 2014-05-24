@@ -15,8 +15,8 @@ public class RPGPlayerJoinServer implements Listener {
 
     @EventHandler
     public void onRPGPlayerJoinServer(PlayerJoinEvent e) {
-	//// add event actions later
-	Player p = e.getPlayer();
-	new RPGEntity(p.getUniqueId());
+        //// add event actions later
+        Player p = e.getPlayer();
+        new RPGEntity(p.getUniqueId());
     }
 }
