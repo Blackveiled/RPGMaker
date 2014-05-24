@@ -12,20 +12,22 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author Matthew Tong
  * @author Adam Canfield
+ * @author John Smith
+ *
  */
 public class RPGMaker extends JavaPlugin {
-    
+
     private static boolean debugMode = true;
-    
+
     @Override
     public void onDisable() {
-        
+
     }
-    
+
     @Override
     public void onEnable() {
         this.getServer().getPluginManager().registerEvents(new com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker.Social.SocialManager(), this);
-        
+        this.getServer().getPluginManager().registerEvents(new com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker.Events.RPGPlayerJoinServer(), this);
         this.getCommand("rpgmaker").setExecutor(new com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker.Commands.rpgmaker());
     }
 
