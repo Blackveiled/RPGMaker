@@ -20,7 +20,7 @@ public class rpgmaker implements CommandExecutor {
         rpgmaker.setCommandUsage("/rpgmaker");
         List<String> description = new ArrayList<String>();
         description.add("RPGMaker is a massive plugin created by " + ChatColor.AQUA + "Blackveiled (Adam Canfield)"
-                + ChatColor.DARK_GRAY + " and " + ChatColor.AQUA + "Juicyzbox (Matt Tong)" + ChatColor.DARK_GRAY
+                + ChatColor.GRAY + " and " + ChatColor.AQUA + "Juicyzbox (Matt Tong)" + ChatColor.GRAY
                 + ".  RPGMaker has multiple systems to utilize for your server, below is a list of commands which provide information"
                 + " about those systems.  Thank you for using RPGMaker!");
         rpgmaker.setDescription(description);
