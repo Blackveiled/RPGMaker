@@ -1,0 +1,18 @@
+# RPGMaker Configuration File
+---
+RPGMaker:
+    Server:
+        Name: My Server
+        Description: My awesome RPG server!
+        mysql-enabled: true
+        debug-mode: true
+    Database:
+        # This is the IP Address or Hostname of your MySQL Database server.
+        Host: 127.0.0.1
+        User: root
+        Password: password
+        # MySQL Port is 3306 by default unless changed.
+        Port: 3306
+        Schema: RPGMaker
+        # DO NOT CHANGE THIS FIELD
+        Installed: false
