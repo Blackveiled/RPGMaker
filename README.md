@@ -1,3 +1,5 @@
+![8f3c6527a20c290afa2c7c7d844d0136e94e38adfdc08368cffd939db06ee82ffcfb484fbe39cae5da39a3ee5e6b4b0d3255bfef95601890afd807094eee2df987bcf809823a37ade40398ca.png](https://bitbucket.org/repo/BXAgBM/images/148458957-8f3c6527a20c290afa2c7c7d844d0136e94e38adfdc08368cffd939db06ee82ffcfb484fbe39cae5da39a3ee5e6b4b0d3255bfef95601890afd807094eee2df987bcf809823a37ade40398ca.png)
+
 # RPGMaker Setup #
 
 This information will help you with getting RPGMaker setup on your own server, aswell as information on how to maintain your server as well.
@@ -11,6 +13,8 @@ This information will help you with getting RPGMaker setup on your own server, a
 
 ### 1.1 Installation & Configuration ###
 5. Download
+6. Database Setup
+7. Configuration
 
 ## 2. Purpose ##
 
