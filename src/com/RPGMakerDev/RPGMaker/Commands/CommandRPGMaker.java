@@ -17,33 +17,37 @@ public class CommandRPGMaker implements CommandExecutor {
     private CommandChatMenu rpgmaker = new CommandChatMenu("RPGMaker");
 
     public CommandRPGMaker() {
-        rpgmaker.setCommandUsage("/rpgmaker");
-        List<String> description = new ArrayList<String>();
-        description.add("RPGMaker is a massive plugin created by " + ChatColor.AQUA + "Blackveiled (Adam Canfield)"
-                + ChatColor.DARK_GRAY + " and " + ChatColor.AQUA + "Juicyzbox (Matt Tong)" + ChatColor.DARK_GRAY
-                + ".  RPGMaker has multiple systems to utilize for your server, below is a list of commands which provide information"
-                + " about those systems.  Thank you for using RPGMaker!");
-        rpgmaker.setDescription(description);
-        CommandChatMenu social = new CommandChatMenu("SocialManager");
-        social.setCommandUsage("/socialmanager");
-        social.setQuickDescription("Controls all social aspects of the server, chat, guilds, parties, and more.");
-        rpgmaker.addSubCommand(0, social);
-        CommandChatMenu accounts = new CommandChatMenu("AccountManager");
-        accounts.setCommandUsage("/accountmanager");
-        accounts.setQuickDescription("View and edit a player's character or game data.");
-        rpgmaker.addSubCommand(1, accounts);
+	rpgmaker.setCommandUsage("/rpgmaker");
+	List<String> description = new ArrayList<String>();
+	description.add("RPGMaker is a massive plugin created by " + ChatColor.AQUA + "Blackveiled (Adam Canfield)"
+		+ ChatColor.GRAY + ", " + ChatColor.AQUA + "Juicyzbox (Matt Tong)" + ChatColor.GRAY + " and "
+		+ ChatColor.AQUA + "Shadow_Parallax (Lorenzo Demoniere)" + ChatColor.GRAY
+		+ ".  RPGMaker has multiple systems to utilize for your server, below is a list of commands which provide information"
+		+ " about those systems.  Thank you for using RPGMaker!");
+	rpgmaker.setDescription(description);
+	CommandChatMenu social = new CommandChatMenu("SocialManager");
+	social.setCommandUsage("/socialmanager");
+	social.setQuickDescription("Controls all social aspects of the server, chat, guilds, parties, and more.");
+	rpgmaker.addSubCommand(0, social);
+	CommandChatMenu accounts = new CommandChatMenu("AccountManager");
+	accounts.setCommandUsage("/accountmanager");
+	accounts.setQuickDescription("View and edit a player's character or game data.");
+	rpgmaker.addSubCommand(1, accounts);
+	CommandChatMenu guild = new CommandChatMenu("Guild");
+	guild.setCommandUsage("/guild");
+	guild.setQuickDescription("Allows you to create a guild or invite players to one.");
     }
 
     public boolean onCommand(CommandSender s, Command cmd, String label, String[] args) {
-        if (s.hasPermission("rpgmaker.admin")) {
-            // Display Command Help Menu
-            List<String> output = rpgmaker.getChatMenu();
-            for (int i = 0; i < output.size(); i++) {
-                s.sendMessage(output.get(i));
-            }
-            return true;
-        }
-        s.sendMessage(ChatColor.RED + "You cannot use this command.");
-        return true;
+	if (s.hasPermission("rpgmaker.admin")) {
+	    // Display Command Help Menu
+	    List<String> output = rpgmaker.getChatMenu();
+	    for (int i = 0; i < output.size(); i++) {
+		s.sendMessage(output.get(i));
+	    }
+	    return true;
+	}
+	s.sendMessage(ChatColor.RED + "You cannot use this command.");
+	return true;
     }
 }
