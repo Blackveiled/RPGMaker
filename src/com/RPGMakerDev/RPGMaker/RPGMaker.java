@@ -18,15 +18,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class RPGMaker extends JavaPlugin {
 
     private static boolean debugMode = true;
-    private static String serverName;
-    private static String serverDescription;
+    public static String serverName;
+    public static String serverDescription;
 
     // MySQL Database Information
-    private static String hostname;
-    private static String username;
-    private static String password;
-    private static String port;
-    private static String schema;
+    public static String hostname;
+    public static String username;
+    public static String password;
+    public static String port;
+    public static String schema;
     private static boolean mysqlEnabled = false;
 
     @Override
