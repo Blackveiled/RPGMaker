@@ -34,7 +34,7 @@ public class CommandChatMenu {
     public List<String> getChatMenu() {
 	List<String> out = new ArrayList<String>();
 	out.add("");
-	out.add(ChatColor.GRAY + "▬▬▬▬▬ " + ChatColor.YELLOW + "" + ChatColor.BOLD + commandName + ChatColor.DARK_GRAY + " Command Information ▬▬▬▬▬");
+	out.add(ChatColor.DARK_GRAY + "▬▬▬▬▬ " + ChatColor.YELLOW + "" + ChatColor.BOLD + commandName + ChatColor.DARK_GRAY + " Command Information ▬▬▬▬▬");
 	for (int i = 0; i < commandDescription.size(); i++) {
 	    out.add(ChatColor.GRAY + commandDescription.get(i));
 	}
