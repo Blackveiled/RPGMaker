@@ -46,6 +46,11 @@ public class CommandGuild implements CommandExecutor {
 
 		case "invite":
 		    break;
+
+		case "save":
+		    RPGEntity player = RPGEntity.getRPGPlayer(p.getUniqueId());
+		    player.getGuild().save();
+		    break;
 	    }
 	} else {
 	    sender.sendMessage("This command can only be ran by a player");

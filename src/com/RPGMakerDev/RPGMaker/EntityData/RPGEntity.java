@@ -40,7 +40,7 @@ public class RPGEntity {
 	RANGER,
     }
 
-    private static HashMap<UUID, RPGEntity> players;
+    private static HashMap<UUID, RPGEntity> players = new HashMap<>();
     private UUID uuid;
     private RPGEntityType type;
     private Guild guild;
@@ -48,8 +48,8 @@ public class RPGEntity {
 
     /**
      * Creates an RPGEntity object for the server. This object contains all of
-     * the player's gameplay stats aswell as methods to affect the player
-     * ingame.
+     * the player's game-play statistics as well as methods to affect the player
+     * in-game.
      *
      * Use this method to create an RPGEntity for a player character.
      *
@@ -66,7 +66,8 @@ public class RPGEntity {
 
     /**
      * Creates an RPGEntity object for the server. This object contains all of
-     * an NPC's gameplay stats aswell as methods to affect the NPC ingame.
+     * an NPC's game-play statistics as well as methods to affect the NPC
+     * in-game.
      *
      * Use this method to create an RPGEntity for an NPC.
      *
@@ -77,7 +78,7 @@ public class RPGEntity {
     }
 
     /**
-     * Gets the book beloning to the Player which shows the data
+     * Gets the book belonging to the Player which shows the data
      *
      * @return the Book
      */

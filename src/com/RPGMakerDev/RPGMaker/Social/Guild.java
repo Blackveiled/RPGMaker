@@ -2,6 +2,7 @@ package com.RPGMakerDev.RPGMaker.Social;
 
 import com.RPGMakerDev.RPGMaker.EntityData.RPGEntity;
 import java.util.ArrayList;
+import org.bukkit.ChatColor;
 import org.json.JSONStringer;
 
 public class Guild {
@@ -30,6 +31,9 @@ public class Guild {
 	this.guildMaster = guildMaster;
 	this.name = name;
 	this.type = GuildType.Small;
+
+	this.guildMaster.getPlayer().sendMessage(ChatColor.GREEN + "Created the guild \"" + name + "\"!");
+
 	// This should be the last thing to execute
 	this.guildMaster.setGuild(this);
     }
