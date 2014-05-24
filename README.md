@@ -2,7 +2,7 @@
 
 # RPGMaker Setup #
 
-This information will help you with getting RPGMaker setup on your own server, aswell as information on how to maintain your server as well.
+This information will help you with getting RPGMaker setup on your own server, aswell as information on how to maintain your server.
 
 ## 1. Table of Contents ##
 ### 1.1 General Information
@@ -18,7 +18,7 @@ This information will help you with getting RPGMaker setup on your own server, a
 
 ## 2. Purpose ##
 
-* RPGMaker is a CraftBukkit plugin which is intended to add a plethora of new features to your server to simulate an MMORPG experience.
+* RPGMaker is a CraftBukkit plugin which is intended to add a plethora of new features for your server to simulate an MMORPG experience.
 * RPGMaker is currently version 1.0.0-R0.1.
 
 ## 3. RPGMaker Versions ##
