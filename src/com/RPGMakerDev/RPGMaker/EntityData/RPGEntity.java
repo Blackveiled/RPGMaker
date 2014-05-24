@@ -61,6 +61,7 @@ public class RPGEntity {
      */
     public RPGEntity(UUID uuid) {
 	type = RPGEntityType.PLAYER;
+	this.uuid = uuid;
 	players.put(uuid, this);
     }
 
@@ -147,6 +148,15 @@ public class RPGEntity {
      */
     public void setGuild(Guild guild) {
 	this.guild = guild;
+    }
+
+    /**
+     * Sends a message
+     *
+     * @param message the message to send
+     */
+    public void sendMessage(String message) {
+	getPlayer().sendMessage(message);
     }
 
 }

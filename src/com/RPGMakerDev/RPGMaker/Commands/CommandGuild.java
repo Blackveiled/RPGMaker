@@ -13,44 +13,52 @@ public class CommandGuild implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 	if (sender instanceof Player) {
 	    Player p = (Player) sender;
-	    switch (args[0]) {
-		case "create":
-		    if (args.length > 2) {
-			StringBuilder name = new StringBuilder("");
+	    if (args.length != 0) {
+		switch (args[0]) {
+		    case "create":
+			if (args.length > 2) {
+			    StringBuilder name = new StringBuilder("");
 
-			for (int i = 1; i < args.length; i++) {
-			    name.append(args[i]);
+			    for (int i = 1; i < args.length; i++) {
+				name.append(args[i]);
+				name.append(" ");
+			    }
+
+			    Guild g = new Guild(RPGEntity.getRPGPlayer(p.getUniqueId()), name.toString().trim());
+
+			} else {
+			    p.sendMessage("Invalid arguments.");
 			}
+			break;
 
-			Guild g = new Guild(RPGEntity.getRPGPlayer(p.getUniqueId()), name.toString());
+		    case "leave":
+			break;
 
-		    } else {
-			p.sendMessage("Invalid arguments.");
-		    }
-		    break;
+		    case "kick":
+			break;
 
-		case "leave":
-		    break;
+		    case "guildhall":
+			break;
 
-		case "kick":
-		    break;
+		    case "gh":
+			break;
 
-		case "guildhall":
-		    break;
+		    case "disband":
+			break;
 
-		case "gh":
-		    break;
+		    case "invite":
+			break;
 
-		case "disband":
-		    break;
-
-		case "invite":
-		    break;
-
-		case "save":
-		    RPGEntity player = RPGEntity.getRPGPlayer(p.getUniqueId());
-		    player.getGuild().save();
-		    break;
+		    case "save":
+			RPGEntity player = RPGEntity.getRPGPlayer(p.getUniqueId());
+			player.getGuild().save();
+			break;
+		}
+	    } else {
+		RPGEntity player = RPGEntity.getRPGPlayer(p.getUniqueId());
+		if (player.getGuild() == null) {
+		    player.sendMessage("You are not in a guild! Create one by using \"/guild create <name>\"");
+		}
 	    }
 	} else {
 	    sender.sendMessage("This command can only be ran by a player");

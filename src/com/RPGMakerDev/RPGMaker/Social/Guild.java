@@ -1,7 +1,12 @@
 package com.RPGMakerDev.RPGMaker.Social;
 
 import com.RPGMakerDev.RPGMaker.EntityData.RPGEntity;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.json.JSONStringer;
 
@@ -85,24 +90,37 @@ public class Guild {
      * Saves the guild to disk
      */
     public void save() {
-	JSONStringer stringer = new JSONStringer();
-	stringer.object()
-		.key("name")
-		.value(name)
-		.key("guildmaster")
-		.value(guildMaster.getPlayer().getUniqueId())
-		.key("members")
-		.array();
-	for (RPGEntity member : members) {
+	try {
+	    JSONStringer stringer = new JSONStringer();
 	    stringer.object()
+		    .key("name")
+		    .value(name)
+		    .key("guildmaster")
+		    .value(guildMaster.getPlayer().getUniqueId())
+		    .key("members")
+		    .array()
+		    .object()
 		    .key("uuid")
-		    .value(member.getPlayer().getUniqueId())
+		    .value(guildMaster.getPlayer().getUniqueId())
 		    .endObject();
-	}
-	stringer.endArray()
-		.endObject();
+	    for (RPGEntity member : members) {
+		stringer.object()
+			.key("uuid")
+			.value(member.getPlayer().getUniqueId())
+			.endObject();
+	    }
+	    stringer.endArray()
+		    .endObject();
 
-	System.out.println(stringer.toString());
+	    File guildFile = new File("plugins/RPGMaker/guilds/" + name + ".guild");
+	    guildFile.createNewFile();
+
+	    FileWriter writer = new FileWriter(guildFile);
+	    writer.write(stringer.toString());
+	    writer.close();
+	} catch (IOException ex) {
+	    Logger.getLogger(Guild.class.getName()).log(Level.SEVERE, null, ex);
+	}
     }
 
 }
