@@ -31,4 +31,5 @@ RPGMaker currently supports CraftBukkit.  If you are curious if your version of 
 
 * Blackveiled (Adam Canfield) / ars93sd@gmail.com
 * Juicyzbox (Matthew Tong)
+* Smeggledex (Lorenzo Demoniere)
 * johnawsome55 (John Smith)

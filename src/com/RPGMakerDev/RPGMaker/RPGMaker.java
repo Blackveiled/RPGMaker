@@ -5,6 +5,8 @@
  */
 package com.RPGMakerDev.RPGMaker;
 
+import com.RPGMakerDev.RPGMaker.Commands.CommandGuild;
+import com.RPGMakerDev.RPGMaker.Commands.CommandRPGMaker;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -36,19 +38,20 @@ public class RPGMaker extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.getConfig();
-        serverName = this.getConfig().getString("RPGMaker.Server.Name");
-        serverDescription = this.getConfig().getString("RPGMaker.Server.Description");
-        hostname = this.getConfig().getString("RPGMaker.Database.Host");
-        username = this.getConfig().getString("RPGMaker.Database.User");
-        password = this.getConfig().getString("RPGMaker.Database.Password");
-        port = this.getConfig().getString("RPGMaker.Database.Port");
-        schema = this.getConfig().getString("RPGMaker.Database.Schema");
-        mysqlEnabled = this.getConfig().getBoolean("RPGMaker.Server.mysql-enabled");
-        debugMode = this.getConfig().getBoolean("RPGMaker.Server.debug-enabled");
-        this.getServer().getPluginManager().registerEvents(new com.RPGMakerDev.RPGMaker.Social.SocialManager(), this);
-        this.getServer().getPluginManager().registerEvents(new com.RPGMakerDev.RPGMaker.Events.RPGPlayerJoinServer(), this);
-        this.getCommand("rpgmaker").setExecutor(new com.RPGMakerDev.RPGMaker.Commands.rpgmaker());
+	this.getConfig();
+	serverName = this.getConfig().getString("RPGMaker.Server.Name");
+	serverDescription = this.getConfig().getString("RPGMaker.Server.Description");
+	hostname = this.getConfig().getString("RPGMaker.Database.Host");
+	username = this.getConfig().getString("RPGMaker.Database.User");
+	password = this.getConfig().getString("RPGMaker.Database.Password");
+	port = this.getConfig().getString("RPGMaker.Database.Port");
+	schema = this.getConfig().getString("RPGMaker.Database.Schema");
+	mysqlEnabled = this.getConfig().getBoolean("RPGMaker.Server.mysql-enabled");
+	debugMode = this.getConfig().getBoolean("RPGMaker.Server.debug-enabled");
+	this.getServer().getPluginManager().registerEvents(new com.RPGMakerDev.RPGMaker.Social.SocialManager(), this);
+	this.getServer().getPluginManager().registerEvents(new com.RPGMakerDev.RPGMaker.Events.RPGPlayerJoinServer(), this);
+	this.getCommand("rpgmaker").setExecutor(new CommandRPGMaker());
+	this.getCommand("guild").setExecutor(new CommandGuild());
     }
 
     /**
@@ -59,10 +62,7 @@ public class RPGMaker extends JavaPlugin {
      * @return True or False.
      */
     public static boolean debugMode() {
-        if (RPGMaker.debugMode) {
-            return true;
-        }
-        return false;
+	return debugMode;
     }
 
     /**
@@ -72,9 +72,9 @@ public class RPGMaker extends JavaPlugin {
      * @return Returns the message. If debugMode is not enabled, returns null;
      */
     public static String debugMessage(String Message) {
-        if (RPGMaker.debugMode()) {
-            return ChatColor.RED + "" + ChatColor.BOLD + "[Debug]" + ChatColor.DARK_GRAY + Message;
-        }
-        return null;
+	if (RPGMaker.debugMode()) {
+	    return ChatColor.RED + "" + ChatColor.BOLD + "[Debug]" + ChatColor.DARK_GRAY + Message;
+	}
+	return null;
     }
 }
