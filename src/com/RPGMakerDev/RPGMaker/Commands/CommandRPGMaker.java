@@ -12,11 +12,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class rpgmaker implements CommandExecutor {
+public class CommandRPGMaker implements CommandExecutor {
 
     private CommandChatMenu rpgmaker = new CommandChatMenu("RPGMaker");
 
-    public rpgmaker() {
+    public CommandRPGMaker() {
         rpgmaker.setCommandUsage("/rpgmaker");
         List<String> description = new ArrayList<String>();
         description.add("RPGMaker is a massive plugin created by " + ChatColor.AQUA + "Blackveiled (Adam Canfield)"

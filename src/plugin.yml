@@ -9,3 +9,8 @@ commands:
         usage: /rpgmaker
         permission: rpgmaker.info
         permission-message: You do not have permission to use this command
+    guild:
+        description: Displays guild info if you're in one
+        usage: /guild
+        permission: rpgmaker.guild
+        permission-message: You do not have permission to use this command

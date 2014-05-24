@@ -5,7 +5,9 @@
  */
 package com.RPGMakerDev.RPGMaker.EntityData;
 
+import com.RPGMakerDev.RPGMaker.Social.Guild;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import org.bukkit.Bukkit;
@@ -20,26 +22,28 @@ public class RPGEntity {
 
     public static enum RPGEntityType {
 
-        PLAYER,
-        NPC,
-        MOB
+	PLAYER,
+	NPC,
+	MOB
     }
 
     public static enum RPGEntityClass {
 
-        WARRIOR,
-        MAGE,
-        ROGUE,
-        HUNTER,
-        PRIEST,
-        SHAMAN,
-        PALADIN,
-        NECROMANCER,
-        RANGER,
+	WARRIOR,
+	MAGE,
+	ROGUE,
+	HUNTER,
+	PRIEST,
+	SHAMAN,
+	PALADIN,
+	NECROMANCER,
+	RANGER,
     }
 
+    private static HashMap<UUID, RPGEntity> players;
     private UUID uuid;
     private RPGEntityType type;
+    private Guild guild;
     private Attributes attributes = new Attributes();
 
     /**
@@ -56,7 +60,8 @@ public class RPGEntity {
      * @param uuid java.util.UUID
      */
     public RPGEntity(UUID uuid) {
-        type = RPGEntityType.PLAYER;
+	type = RPGEntityType.PLAYER;
+	players.put(uuid, this);
     }
 
     /**
@@ -68,26 +73,79 @@ public class RPGEntity {
      * @param RPGEntityType internal parameter
      */
     public RPGEntity(RPGEntityType RPGEntityType) {
-        type = RPGEntityType;
+	type = RPGEntityType;
     }
 
+    /**
+     * Gets the book beloning to the Player which shows the data
+     *
+     * @return the Book
+     */
     public ItemStack getCharacterBook() {
-        ItemStack s = new ItemStack(Material.BOOK, 1);
-        ItemMeta m = s.getItemMeta();
-        BookMeta b = (BookMeta) m;
-        List<String> bd = new ArrayList<String>();
-        bd.add(getPlayer().getDisplayName() + "'s Character Information");
-        bd.add("Level: 0 Class: Warrior");
-        List<String> l = new ArrayList<String>();
-        l.add(ChatColor.WHITE + "Use this item to view information about your character.");
-        m.setDisplayName(ChatColor.YELLOW + "View Character Sheet");
-        m.setLore(l);
-        s.setItemMeta(m);
-        return s;
+	if (type == RPGEntityType.PLAYER) {
+	    ItemStack s = new ItemStack(Material.BOOK, 1);
+	    ItemMeta m = s.getItemMeta();
+	    BookMeta b = (BookMeta) m;
+	    List<String> bd = new ArrayList<String>();
+	    bd.add(getPlayer().getDisplayName() + "'s Character Information");
+	    bd.add("Level: 0 Class: Warrior");
+	    List<String> l = new ArrayList<String>();
+	    l.add(ChatColor.WHITE + "Use this item to view information about your character.");
+	    m.setDisplayName(ChatColor.YELLOW + "View Character Sheet");
+	    m.setLore(l);
+	    s.setItemMeta(m);
+	    return s;
+	} else {
+	    throw new IllegalArgumentException("RPGEntity is not a player!");
+	}
     }
 
+    /**
+     * Gets the player belonging to this RPGEntity
+     *
+     * @return the Player
+     */
     public Player getPlayer() {
-        return Bukkit.getPlayer(uuid);
+	if (type == RPGEntityType.PLAYER) {
+	    return Bukkit.getPlayer(uuid);
+	} else {
+	    throw new IllegalArgumentException("RPGEntity is not a player!");
+	}
+    }
+
+    public static RPGEntity getRPGPlayer(UUID uuid) {
+	return players.get(uuid);
+    }
+
+    /**
+     * Gets the type of the RPGEntity
+     *
+     * @return the RPGEntityType
+     */
+    public RPGEntityType getType() {
+	return type;
+    }
+
+    /**
+     * Gets the guild
+     *
+     * @return the guild
+     */
+    public Guild getGuild() {
+	if (type == RPGEntityType.PLAYER) {
+	    return guild;
+	} else {
+	    throw new IllegalArgumentException("RPGEntity is not a player!");
+	}
+    }
+
+    /**
+     * Sets the guild
+     *
+     * @param guild the guild
+     */
+    public void setGuild(Guild guild) {
+	this.guild = guild;
     }
 
 }
