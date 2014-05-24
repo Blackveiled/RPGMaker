@@ -5,28 +5,54 @@
  */
 package com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker;
 
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+
 /**
  *
  * @author Matthew Tong
  * @author Adam Canfield
  */
 public class RPGMaker extends JavaPlugin {
+    
+    private static boolean debugMode = true;
+    
+    @Override
+    public void onDisable() {
+        
+    }
+    
+    @Override
+    public void onEnable() {
+        this.getServer().getPluginManager().registerEvents(new com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker.Social.SocialManager(), this);
+        
+        this.getCommand("rpgmaker").setExecutor(new com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker.Commands.rpgmaker());
+    }
 
     /**
-     * @param args the command line arguments
+     * Checks if the plugin is in Debug Mode. If the plugin is in debug mode,
+     * messages that would normally not be sent to players will be. This is
+     * mainly for testing purposes.
+     *
+     * @return True or False.
      */
-    /*public static void main(String[] args) {
-        // TODO code application logic here
-    }*/
+    public static boolean debugMode() {
+        if (RPGMaker.debugMode) {
+            return true;
+        }
+        return false;
+    }
 
-   @Override
-   public void onDisable() {
-
-   }
-
-   @Override
-   public void onEnable() {
-
-   }
-} 
+    /**
+     * Debug message chat formatting
+     *
+     * @param Message The message being sent to the player.
+     * @return Returns the message. If debugMode is not enabled, returns null;
+     */
+    public static String debugMessage(String Message) {
+        if (RPGMaker.debugMode()) {
+            return ChatColor.RED + "" + ChatColor.BOLD + "[Debug]" + ChatColor.DARK_GRAY + Message;
+        }
+        return null;
+    }
+}
