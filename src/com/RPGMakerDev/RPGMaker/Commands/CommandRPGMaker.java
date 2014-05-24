@@ -36,14 +36,15 @@ public class CommandRPGMaker implements CommandExecutor {
 	CommandChatMenu guild = new CommandChatMenu("Guild");
 	guild.setCommandUsage("/guild");
 	guild.setQuickDescription("Allows you to create a guild or invite players to one.");
+	rpgmaker.addSubCommand(2, guild);
     }
 
     public boolean onCommand(CommandSender s, Command cmd, String label, String[] args) {
 	if (s.hasPermission("rpgmaker.admin")) {
 	    // Display Command Help Menu
 	    List<String> output = rpgmaker.getChatMenu();
-	    for (int i = 0; i < output.size(); i++) {
-		s.sendMessage(output.get(i));
+	    for (String st : output) {
+		s.sendMessage(st);
 	    }
 	    return true;
 	}
