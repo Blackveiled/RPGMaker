@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker.Social;
+package com.RPGMakerDev.RPGMaker.Social;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker.Commands;
+package com.RPGMakerDev.RPGMaker.Commands;
 
-import com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker.RPGMaker;
+import com.RPGMakerDev.RPGMaker.RPGMaker;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

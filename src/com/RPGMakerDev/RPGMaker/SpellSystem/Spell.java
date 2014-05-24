@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 
-package com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker.SpellSystem;
+package com.RPGMakerDev.RPGMaker.SpellSystem;
 
 /**
  *
  * @author matthew
  */
-public class SpellEffect {
+public class Spell {
     
 }

@@ -1,7 +1,7 @@
 ## YAML Template.
 ---
 name: RPGMaker
-main: com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker.RPGMaker
+main: com.RPGMakerDev.RPGMaker.RPGMaker
 version: v1_0_0R1
 commands:
     rpgmaker:

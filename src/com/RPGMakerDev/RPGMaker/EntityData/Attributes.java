@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker.EntityData;
+package com.RPGMakerDev.RPGMaker.EntityData;
 
 public class Attributes {
 

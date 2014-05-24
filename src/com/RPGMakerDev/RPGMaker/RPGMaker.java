@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker;
+package com.RPGMakerDev.RPGMaker;
 
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,9 +46,9 @@ public class RPGMaker extends JavaPlugin {
         schema = this.getConfig().getString("RPGMaker.Database.Schema");
         mysqlEnabled = this.getConfig().getBoolean("RPGMaker.Server.mysql-enabled");
         debugMode = this.getConfig().getBoolean("RPGMaker.Server.debug-enabled");
-        this.getServer().getPluginManager().registerEvents(new com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker.Social.SocialManager(), this);
-        this.getServer().getPluginManager().registerEvents(new com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker.Events.RPGPlayerJoinServer(), this);
-        this.getCommand("rpgmaker").setExecutor(new com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker.Commands.rpgmaker());
+        this.getServer().getPluginManager().registerEvents(new com.RPGMakerDev.RPGMaker.Social.SocialManager(), this);
+        this.getServer().getPluginManager().registerEvents(new com.RPGMakerDev.RPGMaker.Events.RPGPlayerJoinServer(), this);
+        this.getCommand("rpgmaker").setExecutor(new com.RPGMakerDev.RPGMaker.Commands.rpgmaker());
     }
 
     /**
