@@ -60,7 +60,7 @@ public class SocialPlayer {
      * Sends a player the user's Social Profile.
      *
      * @param playerName The name of the player who will receive the message.
-     * @returns List<String>
+     * @return List<String>
      */
     public List<String> getPlayerStats(String playerName) {
         List<String> list = new ArrayList<String>();

@@ -5,7 +5,16 @@
  */
 package com.AdamMatt.CanfieldTong.Productions.IsSexy.RPGMaker.EntityData;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class RPGEntity {
 
@@ -60,6 +69,25 @@ public class RPGEntity {
      */
     public RPGEntity(RPGEntityType RPGEntityType) {
         type = RPGEntityType;
+    }
+
+    public ItemStack getCharacterBook() {
+        ItemStack s = new ItemStack(Material.BOOK, 1);
+        ItemMeta m = s.getItemMeta();
+        BookMeta b = (BookMeta) m;
+        List<String> bd = new ArrayList<String>();
+        bd.add(getPlayer().getDisplayName() + "'s Character Information");
+        bd.add("Level: 0 Class: Warrior");
+        List<String> l = new ArrayList<String>();
+        l.add(ChatColor.WHITE + "Use this item to view information about your character.");
+        m.setDisplayName(ChatColor.YELLOW + "View Character Sheet");
+        m.setLore(l);
+        s.setItemMeta(m);
+        return s;
+    }
+
+    public Player getPlayer() {
+        return Bukkit.getPlayer(uuid);
     }
 
 }

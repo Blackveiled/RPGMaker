@@ -35,11 +35,15 @@ public class rpgmaker implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender s, Command cmd, String label, String[] args) {
-        // Display Command Help Menu
-        List<String> output = rpgmaker.getChatMenu();
-        for (int i = 0; i < output.size(); i++) {
-            s.sendMessage(output.get(i));
+        if (s.hasPermission("rpgmaker.admin")) {
+            // Display Command Help Menu
+            List<String> output = rpgmaker.getChatMenu();
+            for (int i = 0; i < output.size(); i++) {
+                s.sendMessage(output.get(i));
+            }
+            return true;
         }
+        s.sendMessage(ChatColor.RED + "You cannot use this command.");
         return true;
     }
 }

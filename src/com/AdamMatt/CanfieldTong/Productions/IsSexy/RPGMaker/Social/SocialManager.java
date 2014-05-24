@@ -11,6 +11,15 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class SocialManager implements Listener {
 
+    public static enum ChatFormat {
+
+        ERROR,
+        DEBUG,
+        CHATCOLOR,
+        ENEMYCOLOR,
+        ALLYCOLOR
+    }
+
     /**
      * Starts the SocialManager plugin. This plugin will cause other chat
      * plugins to not work.
