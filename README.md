@@ -11,6 +11,8 @@ This information will help you with getting RPGMaker setup on your own server, a
 
 ### 1.1 Installation & Configuration ###
 5. Download
+6. Database Setup
+7. Configuration
 
 ## 2. Purpose ##
 
