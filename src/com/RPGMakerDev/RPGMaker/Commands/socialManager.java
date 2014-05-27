@@ -81,6 +81,33 @@ public class socialManager implements CommandExecutor {
                         break;
 
                     case "dislike":
+                        if (args.length > 2) {
+                            if (SocialPlayer.socialPlayers.containsKey(UUID.fromString(args[1]))) {
+                                try {
+                                    try {
+
+                                        int parsed = Integer.parseInt(args[2]);
+                                        SocialManager.chatLog.get(parsed);
+                                        SocialPlayer player = SocialPlayer.socialPlayers.get(UUID.fromString(args[1]));
+                                        player.addDislike();
+                                        SocialPlayer.socialPlayers.put(player.getPlayer().getUniqueId(), player);
+                                        player.getPlayer().sendMessage(ChatColor.RED + "Someone disliked your message.");
+                                        sender.sendMessage(ChatColor.RED + "You disliked " + player.getPlayer().getName() + "'s message!");
+                                    } catch (NumberFormatException exception) {
+                                        sender.sendMessage(ChatColor.RED + "Numeric value required.");
+                                        return true;
+                                    }
+                                } catch (IndexOutOfBoundsException exception) {
+                                    sender.sendMessage(ChatColor.RED + "Invalid Message ID");
+                                    return true;
+                                }
+                            } else {
+                                sender.sendMessage(ChatColor.RED + "Invalid UUID entered!");
+                                return true;
+                            }
+                        } else {
+                            p.sendMessage("Invalid arguments.");
+                        }
                         break;
 
                     case "testlike":

@@ -5,6 +5,7 @@
  */
 package com.RPGMakerDev.RPGMaker.Social;
 
+import com.RPGMakerDev.RPGMaker.EntityData.RPGEntity;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.server.v1_7_R3.ChatClickable;
@@ -153,7 +154,8 @@ public class Channel {
 
     public void sendMessage(SocialPlayer player, String msg) {
         SocialManager.chatLog.add(msg);
-        int chatId = SocialManager.chatLog.size();
+        RPGEntity playerstats = RPGEntity.players.get(player.getPlayer().getUniqueId());
+        int chatId = SocialManager.chatLog.size() - 1;
         for (int i = 0; i < playersInChannel.size(); i++) {
             // Likes
             base = new ChatMessage("");
@@ -161,7 +163,7 @@ public class Channel {
             dislike = new ChatMessage(ChatColor.RED + "" + ChatColor.BOLD + "▼");
             channel = new ChatMessage(ChatColor.DARK_GRAY + " ▌ " + ChatColor.WHITE + "" + channelName + ChatColor.DARK_GRAY + " ▌ ");
             name = new ChatMessage(player.getReputationName());
-            message = new ChatMessage(ChatColor.DARK_GRAY + " » " + ChatColor.WHITE + msg);
+            message = new ChatMessage(ChatColor.DARK_GRAY + " » " + ChatColor.WHITE + ChatColor.translateAlternateColorCodes('&', msg));
 
             like.setChatModifier(new ChatModifier());
             like.getChatModifier().setChatClickable(new ChatClickable(EnumClickAction.RUN_COMMAND, "/socialmanager like " + player.getPlayer().getUniqueId() + " " + chatId));
@@ -173,8 +175,11 @@ public class Channel {
 
             name.setChatModifier(new ChatModifier());
             name.getChatModifier().setChatClickable(new ChatClickable(EnumClickAction.SUGGEST_COMMAND, "/w " + player.getPlayer().getName() + " "));
-            name.getChatModifier().a(new ChatHoverable(EnumHoverAction.SHOW_TEXT, new ChatMessage(ChatColor.AQUA + "Data currently unavailable")));
-
+            if (playerstats.guild != null) {
+                name.getChatModifier().a(new ChatHoverable(EnumHoverAction.SHOW_TEXT, new ChatMessage(ChatColor.GOLD + "Level " + playerstats.level + " " + playerstats.eclass.toString() + " <" + playerstats.guild.getName() + ">")));
+            } else {
+                name.getChatModifier().a(new ChatHoverable(EnumHoverAction.SHOW_TEXT, new ChatMessage(ChatColor.GOLD + "Level " + playerstats.level + " " + playerstats.eclass.toString())));
+            }
             base.a(like);
             base.a(dislike);
             base.a(channel);

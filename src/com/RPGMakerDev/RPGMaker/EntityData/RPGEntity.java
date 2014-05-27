@@ -42,12 +42,12 @@ public class RPGEntity {
 
     public static HashMap<UUID, RPGEntity> players = new HashMap<>();
     private UUID uuid;
-    private RPGEntityType type;
-    private RPGEntityClass eclass;
-    private Guild guild;
-    private Attributes attributes = new Attributes();
+    public RPGEntityType type;
+    public RPGEntityClass eclass;
+    public Guild guild;
+    public Attributes attributes = new Attributes();
 
-    private int level = 1;
+    public int level = 1;
 
     /**
      * Creates an RPGEntity object for the server. This object contains all of
@@ -64,6 +64,7 @@ public class RPGEntity {
      */
     public RPGEntity(UUID uuid) {
         type = RPGEntityType.PLAYER;
+        eclass = RPGEntityClass.Rogue;
         this.uuid = uuid;
     }
 

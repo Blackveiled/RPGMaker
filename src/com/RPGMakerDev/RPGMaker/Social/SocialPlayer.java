@@ -17,24 +17,16 @@ import org.bukkit.entity.Player;
 
 public class SocialPlayer {
 
-    public static enum ReputationRank {
-
-        LOVED,
-        LIKED,
-        NEUTRAL,
-        DISLIKED,
-        HATED
-    }
-
     public static Map<UUID, SocialPlayer> socialPlayers = new HashMap<UUID, SocialPlayer>();
+    public Integer cooldown = 0;
 
     private UUID UUID;
     private boolean onlineStatus = true;
 
     /*  REPUTATION                      */
     private Integer karma = 100;
-    private Integer likes = 0;
-    private Integer dislikes = 0;
+    private double likes = 1;
+    private double dislikes = 1;
 
     // This value will only go up to 60.  Once it reaches 60, Karma will go up by 10 and the minutesPlayed will be reset.
     private Integer minutesPlayed = 0;
@@ -91,7 +83,7 @@ public class SocialPlayer {
      * @return double value
      */
     public double getReputationRatio() {
-        double ratio = 0.00;
+        double ratio = 1.00;
         if (likes == 0) {
             if (dislikes == 0) {
                 return ratio;
@@ -209,11 +201,11 @@ public class SocialPlayer {
         return false;
     }
 
-    public int getLikes() {
+    public double getLikes() {
         return likes;
     }
 
-    public int getDislikes() {
+    public double getDislikes() {
         return dislikes;
     }
 
@@ -229,16 +221,22 @@ public class SocialPlayer {
         if (this.getReputationRatio() >= 1.60) {
             return ChatColor.GREEN + getPlayer().getName();
         }
-        if (this.getReputationRatio() <= 1.59 || this.getReputationRatio() >= 1.10) {
-            return ChatColor.DARK_GREEN + getPlayer().getName();
+        if (this.getReputationRatio() <= 1.59) {
+            if (this.getReputationRatio() >= 1.10) {
+                return ChatColor.DARK_GREEN + getPlayer().getName();
+            }
         }
 
-        if (this.getReputationRatio() <= 1.09 || this.getReputationRatio() >= 0.90) {
-            return ChatColor.GRAY + getPlayer().getName();
+        if (this.getReputationRatio() <= 1.09) {
+            if (this.getReputationRatio() >= 0.90) {
+                return ChatColor.GRAY + getPlayer().getName();
+            }
         }
 
-        if (this.getReputationRatio() <= 0.89 || this.getReputationRatio() >= 0.60) {
-            return ChatColor.RED + getPlayer().getName();
+        if (this.getReputationRatio() <= 0.89) {
+            if (this.getReputationRatio() >= 0.60) {
+                return ChatColor.RED + getPlayer().getName();
+            }
         }
 
         if (this.getReputationRatio() <= 0.59) {

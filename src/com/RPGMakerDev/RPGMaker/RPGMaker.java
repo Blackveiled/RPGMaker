@@ -9,6 +9,7 @@ import com.RPGMakerDev.RPGMaker.Commands.CommandGuild;
 import com.RPGMakerDev.RPGMaker.Commands.CommandRPGMaker;
 import com.RPGMakerDev.RPGMaker.Commands.help;
 import com.RPGMakerDev.RPGMaker.Commands.socialManager;
+import com.RPGMakerDev.RPGMaker.EntityData.RPGEntity;
 import com.RPGMakerDev.RPGMaker.Events.RPGPlayerJoinServer;
 import com.RPGMakerDev.RPGMaker.Social.SocialManager;
 import static com.RPGMakerDev.RPGMaker.Social.SocialManager.Global;
@@ -69,6 +70,8 @@ public class RPGMaker extends JavaPlugin {
             SocialPlayer New = new SocialPlayer(p.getUniqueId());
             Global.joinChannel(New);
             SocialPlayer.socialPlayers.put(p.getUniqueId(), New);
+
+            RPGEntity.players.put(p.getUniqueId(), new RPGEntity(p.getUniqueId()));
         }
     }
 

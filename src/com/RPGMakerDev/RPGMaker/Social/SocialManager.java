@@ -48,7 +48,12 @@ public class SocialManager implements Listener {
         e.getPlayer().sendMessage(ChatColor.GRAY + "This server is powered by " + ChatColor.AQUA + "RPGMaker" + ChatColor.GRAY + "!  Minecraft's Most Advanced RPG Plugin!");
         e.getPlayer().sendMessage(ChatColor.GRAY + "If you encounter any bugs, please report them to the server's development team");
         e.getPlayer().sendMessage("");
+        e.getPlayer().sendMessage(ChatColor.GRAY + "This server has a lot of " + ChatColor.AQUA + "" + ChatColor.BOLD + "unique" + ChatColor.GRAY + " features, so feel free to ask around for help, or use the built-in " + ChatColor.YELLOW + "" + ChatColor.ITALIC + "/guide" + ChatColor.GRAY + " command to learn about this server, a completely new experience which Minecraft has never seen!");
+        e.getPlayer().sendMessage("");
         e.setJoinMessage("");
+        if (!e.getPlayer().hasPlayedBefore()) {
+            e.setJoinMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + e.getPlayer().getName() + " has joined the server for the first time!  Welcome them, or join them on their adventure.");
+        }
         if (e.getPlayer().isOp()) {
             e.setJoinMessage(ChatColor.DARK_GRAY + e.getPlayer().getName() + " has joined the server!");
         }
