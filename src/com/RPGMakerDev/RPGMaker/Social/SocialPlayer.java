@@ -17,7 +17,16 @@ import org.bukkit.entity.Player;
 
 public class SocialPlayer {
 
-    private static Map<UUID, SocialPlayer> socialPlayers = new HashMap<UUID, SocialPlayer>();
+    public static enum ReputationRank {
+
+        LOVED,
+        LIKED,
+        NEUTRAL,
+        DISLIKED,
+        HATED
+    }
+
+    public static Map<UUID, SocialPlayer> socialPlayers = new HashMap<UUID, SocialPlayer>();
 
     private UUID UUID;
     private boolean onlineStatus = true;
@@ -97,7 +106,7 @@ public class SocialPlayer {
      *
      * @return boolean
      */
-    private boolean storeSocialPlayer() {
+    private static boolean storeSocialPlayer(UUID UUID) {
         if (!SocialPlayer.socialPlayers.containsKey(UUID)) {
             if (RPGMaker.debugMode()) {
                 RPGMaker.debugMessage(ChatColor.AQUA + "Null: " + ChatColor.DARK_GRAY + UUID + ChatColor.AQUA + ".  Class: "
@@ -116,7 +125,7 @@ public class SocialPlayer {
      *
      * @return SocialPlayer or null
      */
-    public SocialPlayer getStoredSocialPlayer() {
+    public static SocialPlayer getStoredSocialPlayer(UUID UUID) {
         if (SocialPlayer.socialPlayers.containsKey(UUID)) {
             return SocialPlayer.socialPlayers.get(UUID);
         }
@@ -198,6 +207,22 @@ public class SocialPlayer {
             return true;
         }
         return false;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public int getDislikes() {
+        return dislikes;
+    }
+
+    public void addLike() {
+        likes++;
+    }
+
+    public void addDislike() {
+        dislikes++;
     }
 
 }

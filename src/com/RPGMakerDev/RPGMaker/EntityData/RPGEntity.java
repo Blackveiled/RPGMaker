@@ -22,29 +22,32 @@ public class RPGEntity {
 
     public static enum RPGEntityType {
 
-	PLAYER,
-	NPC,
-	MOB
+        PLAYER,
+        NPC,
+        MOB
     }
 
     public static enum RPGEntityClass {
 
-	WARRIOR,
-	MAGE,
-	ROGUE,
-	HUNTER,
-	PRIEST,
-	SHAMAN,
-	PALADIN,
-	NECROMANCER,
-	RANGER,
+        Warrior,
+        Mage,
+        Rogue,
+        Hunter,
+        Priest,
+        Shaman,
+        Paladin,
+        Necromancer,
+        Ranger,
     }
 
-    private static HashMap<UUID, RPGEntity> players = new HashMap<>();
+    public static HashMap<UUID, RPGEntity> players = new HashMap<>();
     private UUID uuid;
     private RPGEntityType type;
+    private RPGEntityClass eclass;
     private Guild guild;
     private Attributes attributes = new Attributes();
+
+    private int level = 1;
 
     /**
      * Creates an RPGEntity object for the server. This object contains all of
@@ -60,9 +63,8 @@ public class RPGEntity {
      * @param uuid java.util.UUID
      */
     public RPGEntity(UUID uuid) {
-	type = RPGEntityType.PLAYER;
-	this.uuid = uuid;
-	players.put(uuid, this);
+        type = RPGEntityType.PLAYER;
+        this.uuid = uuid;
     }
 
     /**
@@ -75,7 +77,7 @@ public class RPGEntity {
      * @param RPGEntityType internal parameter
      */
     public RPGEntity(RPGEntityType RPGEntityType) {
-	type = RPGEntityType;
+        type = RPGEntityType;
     }
 
     /**
@@ -84,22 +86,22 @@ public class RPGEntity {
      * @return the Book
      */
     public ItemStack getCharacterBook() {
-	if (type == RPGEntityType.PLAYER) {
-	    ItemStack s = new ItemStack(Material.BOOK, 1);
-	    ItemMeta m = s.getItemMeta();
-	    BookMeta b = (BookMeta) m;
-	    List<String> bd = new ArrayList<String>();
-	    bd.add(getPlayer().getDisplayName() + "'s Character Information");
-	    bd.add("Level: 0 Class: Warrior");
-	    List<String> l = new ArrayList<String>();
-	    l.add(ChatColor.WHITE + "Use this item to view information about your character.");
-	    m.setDisplayName(ChatColor.YELLOW + "View Character Sheet");
-	    m.setLore(l);
-	    s.setItemMeta(m);
-	    return s;
-	} else {
-	    throw new IllegalArgumentException("RPGEntity is not a player!");
-	}
+        if (type == RPGEntityType.PLAYER) {
+            ItemStack s = new ItemStack(Material.BOOK, 1);
+            ItemMeta m = s.getItemMeta();
+            BookMeta b = (BookMeta) m;
+            List<String> bd = new ArrayList<String>();
+            bd.add(getPlayer().getDisplayName() + "'s Character Information");
+            bd.add("Level: 0 Class: Warrior");
+            List<String> l = new ArrayList<String>();
+            l.add(ChatColor.WHITE + "Use this item to view information about your character.");
+            m.setDisplayName(ChatColor.YELLOW + "View Character Sheet");
+            m.setLore(l);
+            s.setItemMeta(m);
+            return s;
+        } else {
+            throw new IllegalArgumentException("RPGEntity is not a player!");
+        }
     }
 
     /**
@@ -108,15 +110,15 @@ public class RPGEntity {
      * @return the Player
      */
     public Player getPlayer() {
-	if (type == RPGEntityType.PLAYER) {
-	    return Bukkit.getPlayer(uuid);
-	} else {
-	    throw new IllegalArgumentException("RPGEntity is not a player!");
-	}
+        if (type == RPGEntityType.PLAYER) {
+            return Bukkit.getPlayer(uuid);
+        } else {
+            throw new IllegalArgumentException("RPGEntity is not a player!");
+        }
     }
 
     public static RPGEntity getRPGPlayer(UUID uuid) {
-	return players.get(uuid);
+        return players.get(uuid);
     }
 
     /**
@@ -125,7 +127,7 @@ public class RPGEntity {
      * @return the RPGEntityType
      */
     public RPGEntityType getType() {
-	return type;
+        return type;
     }
 
     /**
@@ -134,11 +136,11 @@ public class RPGEntity {
      * @return the guild
      */
     public Guild getGuild() {
-	if (type == RPGEntityType.PLAYER) {
-	    return guild;
-	} else {
-	    throw new IllegalArgumentException("RPGEntity is not a player!");
-	}
+        if (type == RPGEntityType.PLAYER) {
+            return guild;
+        } else {
+            throw new IllegalArgumentException("RPGEntity is not a player!");
+        }
     }
 
     /**
@@ -147,7 +149,7 @@ public class RPGEntity {
      * @param guild the guild
      */
     public void setGuild(Guild guild) {
-	this.guild = guild;
+        this.guild = guild;
     }
 
     /**
@@ -156,7 +158,7 @@ public class RPGEntity {
      * @param message the message to send
      */
     public void sendMessage(String message) {
-	getPlayer().sendMessage(message);
+        getPlayer().sendMessage(message);
     }
 
 }

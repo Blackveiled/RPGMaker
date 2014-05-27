@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -77,11 +75,7 @@ public class RPGItem {
     public int res = 0;
 
     // Item Modifications
-    public int EmptySockets = 0;
-    public Inventory Sockets = null;
-    public Item Socket1 = null;
-    public Item Socket2 = null;
-    public Item Socket3 = null;
+    public List<Socket> Sockets;
     public int Enchantment = 0;
 
     // Economy Values
@@ -93,8 +87,8 @@ public class RPGItem {
     public int donorbuyvalue = 0;
 
     // MineCraft Entity Information
-    public ItemStack item = null;
-    public ItemMeta meta = null;
+    public ItemStack item;
+    public ItemMeta meta;
     public List<String> lore = new ArrayList<String>();
 
     public RPGItem(int id, int amount) {
@@ -238,24 +232,24 @@ public class RPGItem {
             }
         }
         this.lore.add("");
-        if (this.EmptySockets == 1) {
-            if (this.Socket1 == null) {
-                this.lore.add(ChatColor.DARK_GRAY + "Empty Socket");
-            }
-        }
-        if (this.EmptySockets == 2) {
-            if (this.Socket1 == null) {
-                this.lore.add(ChatColor.DARK_GRAY + "Empty Socket");
-            }
-        }
-        if (this.EmptySockets == 3) {
-            if (this.Socket1 == null) {
-                this.lore.add(ChatColor.DARK_GRAY + "Empty Socket");
-            }
-        }
-        if (this.EmptySockets > 0) {
-            this.lore.add("");
-        }
+        /*if (this.EmptySockets == 1) {
+         if (this.Socket1 == null) {
+         this.lore.add(ChatColor.DARK_GRAY + "Empty Socket");
+         }
+         }
+         if (this.EmptySockets == 2) {
+         if (this.Socket1 == null) {
+         this.lore.add(ChatColor.DARK_GRAY + "Empty Socket");
+         }
+         }
+         if (this.EmptySockets == 3) {
+         if (this.Socket1 == null) {
+         this.lore.add(ChatColor.DARK_GRAY + "Empty Socket");
+         }
+         }
+         if (this.EmptySockets > 0) {
+         this.lore.add("");
+         }*/
         if (!this.indestructible) {
             if (this.durability == 0) {
                 this.description = ChatColor.GRAY + "This item is damaged.  Take it to a blacksmith to be repaired";

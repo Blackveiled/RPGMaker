@@ -17,6 +17,8 @@ public class RPGPlayerJoinServer implements Listener {
     public void onRPGPlayerJoinServer(PlayerJoinEvent e) {
         //// add event actions later
         Player p = e.getPlayer();
-        new RPGEntity(p.getUniqueId());
+        if (!RPGEntity.players.containsKey(e.getPlayer().getUniqueId())) {
+            RPGEntity.players.put(e.getPlayer().getUniqueId(), new RPGEntity(p.getUniqueId()));
+        }
     }
 }

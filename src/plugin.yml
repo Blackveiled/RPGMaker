@@ -4,13 +4,23 @@ name: RPGMaker
 main: com.RPGMakerDev.RPGMaker.RPGMaker
 version: v1_0_0R1
 commands:
+    help:
+        description: Displays a help menu.
+        usage: /help
+        permission: help
+        permission-message: You should be able to view this command.
     rpgmaker:
         description: Plugin information about RPGMaker
         usage: /rpgmaker
         permission: rpgmaker.info
-        permission-message: You do not have permission to use this command
+        permission-message: You do not have permission to use this command.
     guild:
         description: Displays guild info if you're in one
         usage: /guild
         permission: rpgmaker.guild
-        permission-message: You do not have permission to use this command
+        permission-message: You do not have permission to use this command.
+    socialmanager:
+        description: Commands that affect the social aspect of the server.
+        usage: /social <arguments>
+        permission: rpgmaker.social
+        permission-message: You do not have permission to use this command.
