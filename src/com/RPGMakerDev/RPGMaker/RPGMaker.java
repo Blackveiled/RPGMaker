@@ -11,7 +11,11 @@ import com.RPGMakerDev.RPGMaker.Commands.help;
 import com.RPGMakerDev.RPGMaker.Commands.socialManager;
 import com.RPGMakerDev.RPGMaker.Events.RPGPlayerJoinServer;
 import com.RPGMakerDev.RPGMaker.Social.SocialManager;
+import static com.RPGMakerDev.RPGMaker.Social.SocialManager.Global;
+import com.RPGMakerDev.RPGMaker.Social.SocialPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -37,11 +41,12 @@ public class RPGMaker extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        Bukkit.broadcastMessage(ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "RPGMaker" + ChatColor.DARK_GRAY + "] The system is reloading, please relog upon completion.");
     }
 
     @Override
     public void onEnable() {
+        Bukkit.broadcastMessage(ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "RPGMaker" + ChatColor.DARK_GRAY + "] Reload completed.  To avoid any complications, please relog.");
         this.getConfig();
         serverName = this.getConfig().getString("RPGMaker.Server.Name");
         serverDescription = this.getConfig().getString("RPGMaker.Server.Description");
@@ -59,6 +64,12 @@ public class RPGMaker extends JavaPlugin {
         this.getCommand("socialmanager").setExecutor(new socialManager());
         this.getCommand("guild").setExecutor(new CommandGuild());
         this.getCommand("help").setExecutor(new help());
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            SocialPlayer New = new SocialPlayer(p.getUniqueId());
+            Global.joinChannel(New);
+            SocialPlayer.socialPlayers.put(p.getUniqueId(), New);
+        }
     }
 
     /**

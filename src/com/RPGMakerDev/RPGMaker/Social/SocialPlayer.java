@@ -225,4 +225,26 @@ public class SocialPlayer {
         dislikes++;
     }
 
+    public String getReputationName() {
+        if (this.getReputationRatio() >= 1.60) {
+            return ChatColor.GREEN + getPlayer().getName();
+        }
+        if (this.getReputationRatio() <= 1.59 || this.getReputationRatio() >= 1.10) {
+            return ChatColor.DARK_GREEN + getPlayer().getName();
+        }
+
+        if (this.getReputationRatio() <= 1.09 || this.getReputationRatio() >= 0.90) {
+            return ChatColor.GRAY + getPlayer().getName();
+        }
+
+        if (this.getReputationRatio() <= 0.89 || this.getReputationRatio() >= 0.60) {
+            return ChatColor.RED + getPlayer().getName();
+        }
+
+        if (this.getReputationRatio() <= 0.59) {
+            return ChatColor.DARK_RED + getPlayer().getName();
+        }
+        return ChatColor.GRAY + getPlayer().getName();
+    }
+
 }

@@ -159,16 +159,16 @@ public class Channel {
             base = new ChatMessage("");
             like = new ChatMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "▲");
             dislike = new ChatMessage(ChatColor.RED + "" + ChatColor.BOLD + "▼");
-            channel = new ChatMessage(ChatColor.DARK_GRAY + " ▌ " + channelName + " ▌ ");
-            name = new ChatMessage(player.getPlayer().getName());
-            message = new ChatMessage(ChatColor.DARK_GRAY + " » " + ChatColor.GRAY + msg);
+            channel = new ChatMessage(ChatColor.DARK_GRAY + " ▌ " + ChatColor.WHITE + "" + channelName + ChatColor.DARK_GRAY + " ▌ ");
+            name = new ChatMessage(player.getReputationName());
+            message = new ChatMessage(ChatColor.DARK_GRAY + " » " + ChatColor.WHITE + msg);
 
             like.setChatModifier(new ChatModifier());
-            like.getChatModifier().setChatClickable(new ChatClickable(EnumClickAction.RUN_COMMAND, "/like " + player.getPlayer().getUniqueId() + " " + chatId));
+            like.getChatModifier().setChatClickable(new ChatClickable(EnumClickAction.RUN_COMMAND, "/socialmanager like " + player.getPlayer().getUniqueId() + " " + chatId));
             like.getChatModifier().a(new ChatHoverable(EnumHoverAction.SHOW_TEXT, new ChatMessage(ChatColor.GREEN + "Like" + ChatColor.WHITE + " this message!")));
 
             dislike.setChatModifier(new ChatModifier());
-            dislike.getChatModifier().setChatClickable(new ChatClickable(EnumClickAction.RUN_COMMAND, "/dislike " + player.getPlayer().getUniqueId() + " " + chatId));
+            dislike.getChatModifier().setChatClickable(new ChatClickable(EnumClickAction.RUN_COMMAND, "/socialmanager dislike " + player.getPlayer().getUniqueId() + " " + chatId));
             dislike.getChatModifier().a(new ChatHoverable(EnumHoverAction.SHOW_TEXT, new ChatMessage(ChatColor.RED + "Dislike" + ChatColor.WHITE + " this message!")));
 
             name.setChatModifier(new ChatModifier());

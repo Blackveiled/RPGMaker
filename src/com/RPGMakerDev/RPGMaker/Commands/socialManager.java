@@ -10,6 +10,7 @@ import com.RPGMakerDev.RPGMaker.Social.SocialPlayer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -82,7 +83,16 @@ public class socialManager implements CommandExecutor {
                     case "dislike":
                         break;
 
-                    case "channel":
+                    case "testlike":
+                        SocialPlayer tester = SocialPlayer.getStoredSocialPlayer(Bukkit.getPlayerExact(args[1]).getUniqueId());
+                        tester.addLike();
+                        SocialPlayer.socialPlayers.put(Bukkit.getPlayerExact(args[1]).getUniqueId(), tester);
+                        break;
+
+                    case "testdislike":
+                        SocialPlayer tester2 = SocialPlayer.getStoredSocialPlayer(Bukkit.getPlayerExact(args[1]).getUniqueId());
+                        tester2.addDislike();
+                        SocialPlayer.socialPlayers.put(Bukkit.getPlayerExact(args[1]).getUniqueId(), tester2);
                         break;
 
                 }

@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class SocialManager implements Listener {
 
-    Channel Global;
+    public static Channel Global;
     public static List<String> chatLog = new ArrayList<String>();
 
     public static enum ChatFormat {
