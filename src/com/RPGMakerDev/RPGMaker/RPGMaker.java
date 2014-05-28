@@ -8,16 +8,22 @@ package com.RPGMakerDev.RPGMaker;
 import com.RPGMakerDev.RPGMaker.Commands.CommandGuild;
 import com.RPGMakerDev.RPGMaker.Commands.CommandRPGMaker;
 import com.RPGMakerDev.RPGMaker.Commands.help;
+import com.RPGMakerDev.RPGMaker.Commands.item;
 import com.RPGMakerDev.RPGMaker.Commands.socialManager;
+import com.RPGMakerDev.RPGMaker.EntityData.CustomEntity;
+import com.RPGMakerDev.RPGMaker.EntityData.EntityDatas;
 import com.RPGMakerDev.RPGMaker.EntityData.RPGEntity;
 import com.RPGMakerDev.RPGMaker.Events.RPGPlayerJoinServer;
 import com.RPGMakerDev.RPGMaker.Social.SocialManager;
 import static com.RPGMakerDev.RPGMaker.Social.SocialManager.Global;
 import com.RPGMakerDev.RPGMaker.Social.SocialPlayer;
+import com.RPGMakerDev.RPGMaker.StoredData.Database;
+import java.sql.SQLException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
 
 /**
  *
@@ -43,10 +49,13 @@ public class RPGMaker extends JavaPlugin {
     @Override
     public void onDisable() {
         Bukkit.broadcastMessage(ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "RPGMaker" + ChatColor.DARK_GRAY + "] The system is reloading, please relog upon completion.");
+        CustomEntity.unregisterEntities();
+
     }
 
     @Override
     public void onEnable() {
+        CustomEntity.registerEntities();
         Bukkit.broadcastMessage(ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "RPGMaker" + ChatColor.DARK_GRAY + "] Reload completed.  To avoid any complications, please relog.");
         this.getConfig();
         serverName = this.getConfig().getString("RPGMaker.Server.Name");
@@ -65,13 +74,51 @@ public class RPGMaker extends JavaPlugin {
         this.getCommand("socialmanager").setExecutor(new socialManager());
         this.getCommand("guild").setExecutor(new CommandGuild());
         this.getCommand("help").setExecutor(new help());
+        this.getCommand("item").setExecutor(new item());
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            SocialPlayer New = new SocialPlayer(p.getUniqueId());
-            Global.joinChannel(New);
-            SocialPlayer.socialPlayers.put(p.getUniqueId(), New);
+        try {
+            Database getEntityData = new Database();
+            String Query = "SELECT * FROM `creatures`";
+            getEntityData.getConnection();
+            getEntityData.Query = getEntityData.connection.prepareStatement(Query);
+            getEntityData.Results = getEntityData.Query.executeQuery();
+            while (getEntityData.Results.next()) {
+                EntityDatas datas = new EntityDatas();
+                datas.id = getEntityData.Results.getInt("ID");
+                datas.name = getEntityData.Results.getString("NAME");
+                datas.damage = getEntityData.Results.getInt("DAMAGE");
+                datas.moveSpeed = getEntityData.Results.getInt("MOVESPEED");
+                datas.entityType = getEntityData.Results.getString("ENTITYTYPE");
+                EntityDatas.entityData.put(getEntityData.Results.getInt("ID"), datas);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } finally {
 
-            RPGEntity.players.put(p.getUniqueId(), new RPGEntity(p.getUniqueId()));
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                SocialPlayer New = new SocialPlayer(p.getUniqueId());
+                Global.joinChannel(New);
+                SocialPlayer.socialPlayers.put(p.getUniqueId(), New);
+
+                RPGEntity.players.put(p.getUniqueId(), new RPGEntity(p.getUniqueId()));
+            }
+
+            BukkitScheduler Scheduler = Bukkit.getScheduler();
+            Scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
+                @Override
+                public void run() {
+                    for (RPGEntity entity : RPGEntity.players.values()) {
+                        if (entity.state.requestDuration > 0) {
+                            entity.state.requestDuration = entity.state.requestDuration - 1;
+                        }
+                        if (entity.state.teleportCooldown > 0) {
+                            entity.state.teleportCooldown = entity.state.teleportCooldown - 1;
+                            if (entity.state.teleportCooldown == 0) {
+                            }
+                        }
+                    }
+                }
+            }, 0L, 20L);
         }
     }
 

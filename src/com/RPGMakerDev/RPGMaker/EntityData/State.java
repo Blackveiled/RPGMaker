@@ -5,6 +5,8 @@
  */
 package com.RPGMakerDev.RPGMaker.EntityData;
 
+import org.bukkit.Location;
+
 public class State {
 
     public static enum ActivityState {
@@ -13,11 +15,19 @@ public class State {
         MOVING,
         INCOMBAT,
         STUNNED,
-        ASLEEP
+        ASLEEP,
+        TELEPORTING
     }
 
     public static enum StateType {
 
         POISONED,
     }
+
+    public ActivityState activityState = ActivityState.IDLE;
+    public Location teleportDestination;
+    public Integer teleportCooldown = 0;
+    public String requesterName;
+    public Integer requestDuration = 0;
+
 }

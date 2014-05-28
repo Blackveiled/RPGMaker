@@ -20,7 +20,6 @@
  */
 package com.RPGMakerDev.RPGMaker.StoredData;
 
-import com.RPGMakerDev.RPGMaker.RPGMaker;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -39,11 +38,11 @@ public class Database {
     public String Port;
 
     public Database() {
-        this.Hostname = RPGMaker.hostname;
-        this.Schema = RPGMaker.schema;
-        this.Username = RPGMaker.username;
-        this.Password = RPGMaker.password;
-        this.Port = RPGMaker.port;
+        this.Hostname = "69.64.50.245";
+        this.Schema = "realmofconquest";
+        this.Username = "root";
+        this.Password = "ou81b4";
+        this.Port = "3306";
     }
 
     public Connection getConnection() throws SQLException {

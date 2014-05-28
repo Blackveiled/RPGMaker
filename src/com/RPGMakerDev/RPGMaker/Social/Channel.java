@@ -157,11 +157,10 @@ public class Channel {
         RPGEntity playerstats = RPGEntity.players.get(player.getPlayer().getUniqueId());
         int chatId = SocialManager.chatLog.size() - 1;
         for (int i = 0; i < playersInChannel.size(); i++) {
-            // Likes
             base = new ChatMessage("");
-            like = new ChatMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "▲");
-            dislike = new ChatMessage(ChatColor.RED + "" + ChatColor.BOLD + "▼");
-            channel = new ChatMessage(ChatColor.DARK_GRAY + " ▌ " + ChatColor.WHITE + "" + channelName + ChatColor.DARK_GRAY + " ▌ ");
+            like = new ChatMessage(ChatColor.GREEN + "" + ChatColor.BOLD + " ▲");
+            dislike = new ChatMessage(ChatColor.RED + "" + ChatColor.BOLD + "▼ ");
+            channel = new ChatMessage(ChatColor.DARK_GRAY + "▌ " + ChatColor.WHITE + "" + channelName + ChatColor.DARK_GRAY + " ▌ ");
             name = new ChatMessage(player.getReputationName());
             message = new ChatMessage(ChatColor.DARK_GRAY + " » " + ChatColor.WHITE + ChatColor.translateAlternateColorCodes('&', msg));
 
@@ -172,6 +171,11 @@ public class Channel {
             dislike.setChatModifier(new ChatModifier());
             dislike.getChatModifier().setChatClickable(new ChatClickable(EnumClickAction.RUN_COMMAND, "/socialmanager dislike " + player.getPlayer().getUniqueId() + " " + chatId));
             dislike.getChatModifier().a(new ChatHoverable(EnumHoverAction.SHOW_TEXT, new ChatMessage(ChatColor.RED + "Dislike" + ChatColor.WHITE + " this message!")));
+
+            if (player.getPlayer().getName().equalsIgnoreCase(playersInChannel.get(i))) {
+                like = new ChatMessage("");
+                dislike = new ChatMessage("");
+            }
 
             name.setChatModifier(new ChatModifier());
             name.getChatModifier().setChatClickable(new ChatClickable(EnumClickAction.SUGGEST_COMMAND, "/w " + player.getPlayer().getName() + " "));

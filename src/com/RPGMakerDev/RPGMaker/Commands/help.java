@@ -5,16 +5,23 @@
  */
 package com.RPGMakerDev.RPGMaker.Commands;
 
+import com.RPGMakerDev.RPGMaker.EntityData.CustomEntity;
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.server.v1_7_R3.EntityInsentient;
+import net.minecraft.server.v1_7_R3.MinecraftServer;
+import net.minecraft.server.v1_7_R3.World;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class help implements CommandExecutor {
 
     private CommandChatMenu rpgmaker = new CommandChatMenu("Server Help");
+    private CustomEntity entity;
+    private World world = MinecraftServer.getServer().getWorld();
 
     public help() {
         rpgmaker.setCommandUsage("/help");
@@ -42,10 +49,32 @@ public class help implements CommandExecutor {
 
     public boolean onCommand(CommandSender s, Command cmd, String label, String[] args) {
         // Display Command Help Menu
+        Player p = (Player) s;
         List<String> output = rpgmaker.getChatMenu();
         for (int i = 0; i < output.size(); i++) {
             s.sendMessage(output.get(i));
         }
+        try {
+            try {
+                spawnCustomEntity(CustomEntity.ZOMBIE, ChatColor.DARK_RED + "Crippled Zombie " + ChatColor.GREEN + "Lv1", "54", "", p.getLocation(), world);
+            } catch (IllegalAccessException exception) {
+
+            }
+        } catch (InstantiationException exception) {
+
+        }
         return true;
+    }
+
+    public void spawnCustomEntity(CustomEntity entity, String name, String type, String owner, org.bukkit.Location loc, net.minecraft.server.v1_7_R3.World world) throws InstantiationException, IllegalAccessException {
+
+        EntityInsentient e = (EntityInsentient) entity.getNMSClass().newInstance(); //This is line 101
+        e.setPosition(loc.getX(), loc.getY(), loc.getZ());
+
+        e.setCustomName(name);
+        e.setCustomNameVisible(true);
+
+        world.addEntity(e);
+
     }
 }

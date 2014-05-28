@@ -24,3 +24,8 @@ commands:
         usage: /social <arguments>
         permission: rpgmaker.social
         permission-message: You do not have permission to use this command.
+    item:
+        description: Gives items via the custom items system
+        usage: /item <id>
+        permission: rpgmaker.give
+        permission-message: You do not have permission to use this command.

@@ -41,6 +41,7 @@ public class RPGEntity {
     }
 
     public static HashMap<UUID, RPGEntity> players = new HashMap<>();
+    public State state = new State();
     private UUID uuid;
     public RPGEntityType type;
     public RPGEntityClass eclass;

@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class SocialManager implements Listener {
 
@@ -52,16 +53,24 @@ public class SocialManager implements Listener {
         e.getPlayer().sendMessage("");
         e.setJoinMessage("");
         if (!e.getPlayer().hasPlayedBefore()) {
-            e.setJoinMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + e.getPlayer().getName() + " has joined the server for the first time!  Welcome them, or join them on their adventure.");
+            e.setJoinMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + e.getPlayer().getName() + "" + ChatColor.DARK_GRAY + " has joined the server for the first time!  Welcome them, or join them on their adventure.");
         }
         if (e.getPlayer().isOp()) {
-            e.setJoinMessage(ChatColor.DARK_GRAY + e.getPlayer().getName() + " has joined the server!");
+            e.setJoinMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + e.getPlayer().getName() + ChatColor.DARK_GRAY + " has joined the server!");
         }
         if (SocialPlayer.getStoredSocialPlayer(e.getPlayer().getUniqueId()) == null) {
 
             SocialPlayer New = new SocialPlayer(e.getPlayer().getUniqueId());
             Global.joinChannel(New);
             SocialPlayer.socialPlayers.put(e.getPlayer().getUniqueId(), New);
+        }
+    }
+
+    @EventHandler
+    public void onPlayerQuitEvent(PlayerQuitEvent e) {
+        e.setQuitMessage("");
+        if (e.getPlayer().isOp()) {
+            e.setQuitMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + e.getPlayer().getName() + "" + ChatColor.DARK_GRAY + " has left the server!");
         }
     }
 }

@@ -202,7 +202,7 @@ public class RPGItem {
         if (this.soulbound) {
             this.lore.add(ChatColor.DARK_GRAY + "Soulbound");
         }
-        this.lore.add(ChatColor.DARK_GRAY + "Item Level " + Integer.toString(this.ilvl));
+        this.lore.add(ChatColor.GRAY + "Item Level " + Integer.toString(this.ilvl));
         int totaldamage = this.mindamage + this.maxdamage;
         if (totaldamage > 0) {
             this.lore.add(ChatColor.RESET + "" + Integer.toString(this.mindamage) + "-" + Integer.toString(this.maxdamage) + " Damage");
@@ -214,21 +214,21 @@ public class RPGItem {
         int statsTotal = this.str + this.agi + this.intell + this.vit + this.res;
         if (statsTotal > 0) {
             this.lore.add("");
-            this.lore.add(ChatColor.GOLD + "" + ChatColor.UNDERLINE + "Item Stats");
+            this.lore.add(ChatColor.YELLOW + "" + ChatColor.UNDERLINE + "Item Attributes");
             if (this.str > 0) {
-                this.lore.add(ChatColor.DARK_RED + Integer.toString(this.str) + " Strength");
+                this.lore.add(ChatColor.WHITE + Integer.toString(this.str) + " Strength");
             }
             if (this.agi > 0) {
-                this.lore.add(ChatColor.YELLOW + Integer.toString(this.agi) + " Agility");
+                this.lore.add(ChatColor.WHITE + Integer.toString(this.agi) + " Agility");
             }
             if (this.intell > 0) {
-                this.lore.add(ChatColor.BLUE + Integer.toString(this.intell) + " Intelligence");
+                this.lore.add(ChatColor.WHITE + Integer.toString(this.intell) + " Intelligence");
             }
             if (this.vit > 0) {
-                this.lore.add(ChatColor.GREEN + Integer.toString(this.vit) + " Vitality");
+                this.lore.add(ChatColor.WHITE + Integer.toString(this.vit) + " Vitality");
             }
             if (this.res > 0) {
-                this.lore.add(ChatColor.LIGHT_PURPLE + Integer.toString(this.res) + " Resilience");
+                this.lore.add(ChatColor.WHITE + Integer.toString(this.res) + " Resilience");
             }
         }
         this.lore.add("");
