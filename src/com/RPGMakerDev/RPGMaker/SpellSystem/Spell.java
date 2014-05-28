@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.RPGMakerDev.RPGMaker.SpellSystem;
 
 import org.bukkit.Location;
@@ -12,10 +6,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-/**
- *
- * @author matthew
- */
 public class Spell {
     private SpellEffect[] effects;
     private SpellType[] types;
@@ -32,6 +22,8 @@ public class Spell {
      * 
      * Not using square-root due to how long it takes to calculate
      * Not rooting will give the same comparison but different distance
+     * 
+     * *TODO* Need spell regeants
      */
     public Spell(SpellEffect[] effects, SpellType[] types, double range, Entity target, Entity caster) {
         this.effects = effects;
@@ -68,12 +60,26 @@ public class Spell {
         return false;
     }
     
+    /*
+     * Helper function for each SpellType
+     */
     private void castType(SpellType spell) {
         Damageable tar = (Damageable)target; 
         if (spell instanceof DamageType) {
             double damage = tar.getHealth() - ((DamageType)spell).getDamage();
             double setDamage = damage < 0 ? 0 : damage;
             tar.setHealth(setDamage);
+        }
+        else if (spell instanceof HealType) {
+            double heal = tar.getHealth() + ((HealType)spell).getHeal();
+            double setHeal = heal > tar.getMaxHealth() ? tar.getMaxHealth() : heal;
+            tar.setHealth(setHeal);
+        }
+        else if (spell instanceof DOTType) {
+            ((DOTType)spell).applyDamage(target, caster);
+        }
+        else if (spell instanceof HOTType) {
+            ((HOTType)spell).applyHeal(target, caster);
         }
         
         return;
