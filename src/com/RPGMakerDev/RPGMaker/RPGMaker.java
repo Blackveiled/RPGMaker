@@ -20,6 +20,8 @@ import com.RPGMakerDev.RPGMaker.EntityData.LootingSystem.LootChest;
 import com.RPGMakerDev.RPGMaker.EntityData.LootingSystem.LootingListener;
 import com.RPGMakerDev.RPGMaker.EntityData.RPGEntity;
 import com.RPGMakerDev.RPGMaker.Events.RPGPlayerJoinServer;
+import com.RPGMakerDev.RPGMaker.Graveyard.Graveyard;
+import com.RPGMakerDev.RPGMaker.Graveyard.GraveyardListener;
 import com.RPGMakerDev.RPGMaker.Inventory.Interact.InteractionListener;
 import com.RPGMakerDev.RPGMaker.Inventory.RPGInventoryListener;
 import com.RPGMakerDev.RPGMaker.Social.SocialManager;
@@ -99,6 +101,12 @@ public class RPGMaker extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new InteractionListener(), this);
         this.getServer().getPluginManager().registerEvents(new RPGInventoryListener(), this);
         this.getServer().getPluginManager().registerEvents(new LootingListener(), this);
+        
+        //For graveyard plugin
+        this.getServer().getPluginManager().registerEvents(new GraveyardListener(this), this);
+        this.gy = new Graveyard();
+        this.getCommand("setgy").setExecutor(new SetGraveyard());
+        
         this.getCommand("rpgmaker").setExecutor(new CommandRPGMaker());
         this.getCommand("socialmanager").setExecutor(new socialManager());
         this.getCommand("guild").setExecutor(new CommandGuild());
