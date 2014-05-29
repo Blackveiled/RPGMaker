@@ -6,19 +6,19 @@
 package com.RPGMakerDev.RPGMaker.EntityData;
 
 import java.lang.reflect.Field;
+import net.minecraft.server.v1_7_R3.EntityHorse;
 import net.minecraft.server.v1_7_R3.EntityHuman;
-import net.minecraft.server.v1_7_R3.EntityIronGolem;
-import net.minecraft.server.v1_7_R3.GenericAttributes;
+import net.minecraft.server.v1_7_R3.PathfinderGoalFloat;
+import net.minecraft.server.v1_7_R3.PathfinderGoalHurtByTarget;
 import net.minecraft.server.v1_7_R3.PathfinderGoalLookAtPlayer;
 import net.minecraft.server.v1_7_R3.PathfinderGoalSelector;
 import net.minecraft.server.v1_7_R3.World;
 import org.bukkit.craftbukkit.v1_7_R3.util.UnsafeList;
 
-public class CustomGuard extends EntityIronGolem {
+public class HorseMount extends EntityHorse {
 
-    public CustomGuard(World world) {
+    public HorseMount(World world) {
         super(world);
-
         try {
             Field bField = PathfinderGoalSelector.class.getDeclaredField("b");
             bField.setAccessible(true);
@@ -33,15 +33,9 @@ public class CustomGuard extends EntityIronGolem {
 // This means that the name of one of the fields changed names or declaration and will have to be re-examined.
         }
 
-        this.goalSelector.a(1, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
+        this.goalSelector.a(0, new PathfinderGoalFloat(this));
+        this.goalSelector.a(8, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
+        this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, true));
     }
 
-    @Override
-    public boolean aD() {
-        super.aD();
-        this.getAttributeInstance(GenericAttributes.e).setValue(50.0D); // Original 3.0D
-        this.getAttributeInstance(GenericAttributes.d).setValue(1.0D);
-        this.getAttributeInstance(GenericAttributes.a).setValue(5000.0D);
-        return true;
-    }
 }

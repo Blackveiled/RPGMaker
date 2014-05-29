@@ -4,6 +4,16 @@ name: RPGMaker
 main: com.RPGMakerDev.RPGMaker.RPGMaker
 version: v1_0_0R1
 commands:
+    mount:
+        description: Mount nearest target to you
+        usage: /mount
+        permission: mount
+        permission-message: Yolo
+    spawnmob:
+        description: none
+        usage: /spawnmob <mob>
+        permission: spawnmob
+        permission-message: Sucks
     help:
         description: Displays a help menu.
         usage: /help

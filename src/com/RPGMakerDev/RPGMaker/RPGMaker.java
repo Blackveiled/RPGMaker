@@ -9,18 +9,28 @@ import com.RPGMakerDev.RPGMaker.Commands.CommandGuild;
 import com.RPGMakerDev.RPGMaker.Commands.CommandRPGMaker;
 import com.RPGMakerDev.RPGMaker.Commands.help;
 import com.RPGMakerDev.RPGMaker.Commands.item;
+import com.RPGMakerDev.RPGMaker.Commands.mount;
 import com.RPGMakerDev.RPGMaker.Commands.socialManager;
+import com.RPGMakerDev.RPGMaker.Commands.spawnmob;
 import com.RPGMakerDev.RPGMaker.EntityData.CustomEntity;
 import com.RPGMakerDev.RPGMaker.EntityData.EntityDatas;
+import com.RPGMakerDev.RPGMaker.EntityData.EntityListeners;
+import com.RPGMakerDev.RPGMaker.EntityData.LootingSystem.LootChest;
+import com.RPGMakerDev.RPGMaker.EntityData.LootingSystem.LootingListener;
 import com.RPGMakerDev.RPGMaker.EntityData.RPGEntity;
 import com.RPGMakerDev.RPGMaker.Events.RPGPlayerJoinServer;
+import com.RPGMakerDev.RPGMaker.Inventory.Interact.InteractionListener;
+import com.RPGMakerDev.RPGMaker.Inventory.RPGInventoryListener;
 import com.RPGMakerDev.RPGMaker.Social.SocialManager;
 import static com.RPGMakerDev.RPGMaker.Social.SocialManager.Global;
 import com.RPGMakerDev.RPGMaker.Social.SocialPlayer;
 import com.RPGMakerDev.RPGMaker.StoredData.Database;
 import java.sql.SQLException;
+import java.util.Iterator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -50,6 +60,15 @@ public class RPGMaker extends JavaPlugin {
     public void onDisable() {
         Bukkit.broadcastMessage(ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "RPGMaker" + ChatColor.DARK_GRAY + "] The system is reloading, please relog upon completion.");
         CustomEntity.unregisterEntities();
+        for (Entity entity : Bukkit.getServer().getWorld("world").getEntities()) {
+            if (!(entity instanceof Player)) {
+                entity.remove();
+            }
+        }
+
+        Iterator<Location> iterator = LootChest.chests.keySet().iterator();
+        while (iterator.hasNext()) {
+        }
 
     }
 
@@ -70,11 +89,17 @@ public class RPGMaker extends JavaPlugin {
         this.saveConfig();
         this.getServer().getPluginManager().registerEvents(new SocialManager(), this);
         this.getServer().getPluginManager().registerEvents(new RPGPlayerJoinServer(), this);
+        this.getServer().getPluginManager().registerEvents(new EntityListeners(), this);
+        this.getServer().getPluginManager().registerEvents(new InteractionListener(), this);
+        this.getServer().getPluginManager().registerEvents(new RPGInventoryListener(), this);
+        this.getServer().getPluginManager().registerEvents(new LootingListener(), this);
         this.getCommand("rpgmaker").setExecutor(new CommandRPGMaker());
         this.getCommand("socialmanager").setExecutor(new socialManager());
         this.getCommand("guild").setExecutor(new CommandGuild());
         this.getCommand("help").setExecutor(new help());
         this.getCommand("item").setExecutor(new item());
+        this.getCommand("spawnmob").setExecutor(new spawnmob());
+        this.getCommand("mount").setExecutor(new mount());
 
         try {
             Database getEntityData = new Database();

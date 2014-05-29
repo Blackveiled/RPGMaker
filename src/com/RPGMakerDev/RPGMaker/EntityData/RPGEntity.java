@@ -5,7 +5,11 @@
  */
 package com.RPGMakerDev.RPGMaker.EntityData;
 
+import com.RPGMakerDev.RPGMaker.Inventory.RPGInventory;
+import com.RPGMakerDev.RPGMaker.Inventory.RPGItem;
 import com.RPGMakerDev.RPGMaker.Social.Guild;
+import com.RPGMakerDev.RPGMaker.StoredData.Database;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,14 +45,19 @@ public class RPGEntity {
     }
 
     public static HashMap<UUID, RPGEntity> players = new HashMap<>();
+    public Database database;
     public State state = new State();
     private UUID uuid;
+    public RPGInventory rpgInventory;
     public RPGEntityType type;
     public RPGEntityClass eclass;
     public Guild guild;
     public Attributes attributes = new Attributes();
 
     public int level = 1;
+    public int experience = 0;
+    public int gold = 0;
+    public String storedClass;
 
     /**
      * Creates an RPGEntity object for the server. This object contains all of
@@ -64,22 +73,94 @@ public class RPGEntity {
      * @param uuid java.util.UUID
      */
     public RPGEntity(UUID uuid) {
-        type = RPGEntityType.PLAYER;
-        eclass = RPGEntityClass.Rogue;
-        this.uuid = uuid;
+        try {
+            type = RPGEntityType.PLAYER;
+            eclass = RPGEntityClass.Rogue;
+            rpgInventory = new RPGInventory(uuid);
+            this.uuid = uuid;
+            database = new Database();
+            database.getConnection();
+            String query = "SELECT * FROM `players` WHERE `UUID`='" + uuid.toString() + "'";
+            database.Query = database.connection.prepareStatement(query);
+            database.Results = database.Query.executeQuery();
+            int count = 0;
+            while (database.Results.next()) {
+
+                storedClass = database.Results.getString("CLASS");
+                level = database.Results.getInt("LEVEL");
+                experience = database.Results.getInt("EXP");
+                gold = database.Results.getInt("GOLD");
+                attributes.strength = database.Results.getInt("STR");
+                attributes.agility = database.Results.getInt("AGI");
+                attributes.intelligence = database.Results.getInt("INT");
+                attributes.vitality = database.Results.getInt("VIT");
+                attributes.resilience = database.Results.getInt("RES");
+                count++;
+            }
+            if (count == 0) {
+                this.importNewCharacter();
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally {
+
+        }
+
     }
 
     /**
-     * Creates an RPGEntity object for the server. This object contains all of
-     * an NPC's game-play statistics as well as methods to affect the NPC
-     * in-game.
-     *
-     * Use this method to create an RPGEntity for an NPC.
-     *
-     * @param RPGEntityType internal parameter
+     * Imports a new character to the database, only do this for players who are
+     * joining for their first time to the server.
      */
-    public RPGEntity(RPGEntityType RPGEntityType) {
-        type = RPGEntityType;
+    public void importNewCharacter() {
+        try {
+            this.database.getConnection();
+            if (this.database.connection == null) {
+                this.database.getConnection();
+                return; // Failed to get connection. End here.
+            }
+            String importCharacter = "INSERT INTO `players` (`UUID`, `USERNAME`) VALUES('" + this.uuid + "', '" + Bukkit.getPlayer(uuid).getName() + "');";
+            this.database.Query = this.database.connection.prepareStatement(importCharacter);
+            int count = this.database.Query.executeUpdate(importCharacter);
+            this.database.Query.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    /**
+     * Saves this RPGEntity's data to the database server provided.
+     */
+    public void importToDatabase() {
+        try {
+            String importCharacter = "UPDATE `players` SET `LEVEL`=" + Integer.toString(level) + ","
+                    + " `EXP`=" + Integer.toString(experience)
+                    + ", `STR`=" + Integer.toString(attributes.strength)
+                    + ", `AGI`=" + Integer.toString(attributes.agility)
+                    + ", `INT`=" + Integer.toString(attributes.intelligence)
+                    + ", `VIT`=" + Integer.toString(attributes.vitality)
+                    + ", `RES`=" + Integer.toString(attributes.resilience)
+                    + ", `GOLD`=" + Integer.toString(gold)
+                    + ", `CLASS`='" + ChatColor.stripColor(storedClass) + "'"
+                    + " WHERE `UUID`='" + this.uuid + "';";
+            this.database.Query = this.database.connection.prepareStatement(importCharacter);
+            this.database.Query.executeUpdate();
+
+            // Importing Inventory
+            String importInventory = null;
+            String delete = "DELETE FROM `players_inventories` WHERE `UUID`='" + this.uuid + "';";
+            this.database.Query.execute(delete);
+            for (int i = 0; i < 30; i++) {
+                if (this.rpgInventory.RPGInventory.containsKey(i)) {
+                    RPGItem item = this.rpgInventory.RPGInventory.get(i);
+                    importInventory = "INSERT INTO `players_inventories` (`UUID`, `ITEMSLOT`, `ITEMID`, `AMOUNT`, `DURA`) VALUES ('" + this.uuid + "', "
+                            + i + ", " + item.id + ", " + item.amount + ", " + item.durability + ");";
+                    this.database.Query.execute(importInventory);
+                }
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
     /**

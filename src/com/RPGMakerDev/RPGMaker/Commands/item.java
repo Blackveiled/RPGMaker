@@ -5,6 +5,7 @@
  */
 package com.RPGMakerDev.RPGMaker.Commands;
 
+import com.RPGMakerDev.RPGMaker.EntityData.RPGEntity;
 import com.RPGMakerDev.RPGMaker.Inventory.RPGItem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,7 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class item implements CommandExecutor {
-
+    
     @Override
     public boolean onCommand(CommandSender s, Command cmd, String label, String[] args) {
         if (s instanceof Player) {
@@ -22,7 +23,7 @@ public class item implements CommandExecutor {
                 RPGItem give = new RPGItem(parsed, 1);
                 give.updateItemLore();
                 give.updateItemMeta();
-                p.getInventory().addItem(give.getItemStack());
+                RPGEntity.players.get(p.getUniqueId()).rpgInventory.saveItem(p.getInventory().firstEmpty(), give);
             }
             return true;
         }

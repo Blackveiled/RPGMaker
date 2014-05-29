@@ -49,8 +49,8 @@ public class RPGItem {
     public String description = null;
     public String owner = null; // Only referenced if the field "soulbound" is referenced.
     public int slotid = 0;
-    public double durability = 0;
-    public double maxdurability = 0;
+    public float durability = 0;
+    public float maxdurability = 0;
     public int amount = 0;
 
     // Item Flags
@@ -130,7 +130,7 @@ public class RPGItem {
         }
     }
 
-    public RPGItem(int id, int slot, int dura, int amount) {
+    public RPGItem(int id, int slot, float dura, int amount) {
         this.id = id;
         this.durability = dura;
         this.slotid = slot;
@@ -256,8 +256,17 @@ public class RPGItem {
             }
         }
         if (this.description != null) {
-            // Add descriptions later
-            // this.lore.add("");
+            for (int i = 0; i < this.description.length();) {
+                try {
+                    int le = i + 25;
+                    this.lore.add(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', this.description.substring(i, le)));
+                    i = i + 25;
+                } catch (Exception exception) {
+                    this.lore.add(ChatColor.GRAY + ChatColor.translateAlternateColorCodes('&', this.description.substring(i, this.description.length())));
+                    i = i + 25;
+                }
+
+            }
         }
         if (!this.indestructible) {
             this.lore.add(ChatColor.GRAY + "" + this.durability + "/" + this.maxdurability + " Durability");
@@ -270,6 +279,7 @@ public class RPGItem {
         }
         this.lore.add(ChatColor.YELLOW + "Sell Value: " + ChatColor.GRAY + "" + this.goldsellvalue);
         this.lore.add(ChatColor.AQUA + "Item ID: " + this.id);
+        updateItemMeta();
     }
 
     public void updateItemMeta() {
@@ -327,7 +337,7 @@ public class RPGItem {
     }
 
     public int DurabilityHit() {
-        this.durability = this.durability - 0.01;
+        this.durability = (float) (this.durability - 0.01);
         long duraout = Math.round(this.durability);
         return Integer.parseInt(Long.toString(duraout));
     }

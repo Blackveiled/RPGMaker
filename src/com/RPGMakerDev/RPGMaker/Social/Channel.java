@@ -180,9 +180,9 @@ public class Channel {
             name.setChatModifier(new ChatModifier());
             name.getChatModifier().setChatClickable(new ChatClickable(EnumClickAction.SUGGEST_COMMAND, "/w " + player.getPlayer().getName() + " "));
             if (playerstats.guild != null) {
-                name.getChatModifier().a(new ChatHoverable(EnumHoverAction.SHOW_TEXT, new ChatMessage(ChatColor.GOLD + "Level " + playerstats.level + " " + playerstats.eclass.toString() + " <" + playerstats.guild.getName() + ">")));
+                name.getChatModifier().a(new ChatHoverable(EnumHoverAction.SHOW_TEXT, new ChatMessage(ChatColor.WHITE + "Level " + ChatColor.GREEN + playerstats.level + " " + playerstats.eclass.toString() + " <" + playerstats.guild.getName() + ">")));
             } else {
-                name.getChatModifier().a(new ChatHoverable(EnumHoverAction.SHOW_TEXT, new ChatMessage(ChatColor.GOLD + "Level " + playerstats.level + " " + playerstats.eclass.toString())));
+                name.getChatModifier().a(new ChatHoverable(EnumHoverAction.SHOW_TEXT, new ChatMessage(ChatColor.WHITE + "Level " + ChatColor.GREEN + playerstats.level + " " + playerstats.eclass.toString())));
             }
             base.a(like);
             base.a(dislike);

@@ -22,9 +22,9 @@ import net.minecraft.server.v1_7_R3.PathfinderGoalSelector;
 import net.minecraft.server.v1_7_R3.World;
 import org.bukkit.craftbukkit.v1_7_R3.util.UnsafeList;
 
-public class CrippledZombie1 extends EntityZombie {
+public class EliteZombieLv3 extends EntityZombie {
 
-    public CrippledZombie1(World world) {
+    public EliteZombieLv3(World world) {
         super(world);
 
         try {
@@ -50,15 +50,13 @@ public class CrippledZombie1 extends EntityZombie {
         this.goalSelector.a(8, new PathfinderGoalRandomLookaround(this));
         this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, true));
         this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityHuman.class, 0, true));
-
     }
 
     @Override
     public void aC() {
         super.aC();
-        this.getAttributeInstance(GenericAttributes.e).setValue(2.5D); // Original 3.0D
-        this.getAttributeInstance(GenericAttributes.d).setValue(0.2D);
-        this.getAttributeInstance(GenericAttributes.a).setValue(20.0D);
+        this.getAttributeInstance(GenericAttributes.e).setValue(7.0D); // Original 3.0D
+        this.getAttributeInstance(GenericAttributes.d).setValue(0.33D);
+        this.getAttributeInstance(GenericAttributes.a).setValue(100.0D);
     }
-
 }

@@ -15,12 +15,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class SocialManager implements Listener {
-
+    
     public static Channel Global;
     public static List<String> chatLog = new ArrayList<String>();
-
+    
     public static enum ChatFormat {
-
+        
         ERROR,
         DEBUG,
         CHATCOLOR,
@@ -35,13 +35,13 @@ public class SocialManager implements Listener {
     public SocialManager() {
         Global = new Channel(1, "Global");
     }
-
+    
     @EventHandler
     public void smChatEvent(AsyncPlayerChatEvent e) {
         e.setCancelled(true);
         Global.sendMessage(SocialPlayer.getStoredSocialPlayer(e.getPlayer().getUniqueId()), e.getMessage());
     }
-
+    
     @EventHandler
     public void smJoinEvent(PlayerJoinEvent e) {
         e.getPlayer().sendMessage("");
@@ -59,15 +59,18 @@ public class SocialManager implements Listener {
             e.setJoinMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + e.getPlayer().getName() + ChatColor.DARK_GRAY + " has joined the server!");
         }
         if (SocialPlayer.getStoredSocialPlayer(e.getPlayer().getUniqueId()) == null) {
-
+            
             SocialPlayer New = new SocialPlayer(e.getPlayer().getUniqueId());
             Global.joinChannel(New);
             SocialPlayer.socialPlayers.put(e.getPlayer().getUniqueId(), New);
+        } else {
+            Global.joinChannel(SocialPlayer.getStoredSocialPlayer(e.getPlayer().getUniqueId()));
         }
     }
-
+    
     @EventHandler
     public void onPlayerQuitEvent(PlayerQuitEvent e) {
+        SocialManager.Global.leaveChannel(SocialPlayer.socialPlayers.get(e.getPlayer().getUniqueId()));
         e.setQuitMessage("");
         if (e.getPlayer().isOp()) {
             e.setQuitMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + e.getPlayer().getName() + "" + ChatColor.DARK_GRAY + " has left the server!");

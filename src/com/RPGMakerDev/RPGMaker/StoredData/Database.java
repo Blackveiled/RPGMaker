@@ -38,10 +38,10 @@ public class Database {
     public String Port;
 
     public Database() {
-        this.Hostname = "69.64.50.245";
-        this.Schema = "realmofconquest";
+        this.Hostname = "host";
+        this.Schema = "schema";
         this.Username = "root";
-        this.Password = "ou81b4";
+        this.Password = "password";
         this.Port = "3306";
     }
 

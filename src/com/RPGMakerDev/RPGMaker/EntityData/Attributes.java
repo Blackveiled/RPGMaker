@@ -11,7 +11,7 @@ public class Attributes {
     public Integer strength;
     public Integer agility;
     public Integer intelligence;
-    public Integer stamina;
+    public Integer vitality;
 
     // Defensive Stats
     public Integer armor;

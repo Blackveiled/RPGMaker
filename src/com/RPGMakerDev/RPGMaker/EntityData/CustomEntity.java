@@ -10,17 +10,22 @@ import java.util.List;
 import java.util.Map;
 import net.minecraft.server.v1_7_R3.BiomeBase;
 import net.minecraft.server.v1_7_R3.BiomeMeta;
+import net.minecraft.server.v1_7_R3.EntityHorse;
 import net.minecraft.server.v1_7_R3.EntityInsentient;
 import net.minecraft.server.v1_7_R3.EntityIronGolem;
 import net.minecraft.server.v1_7_R3.EntityTypes;
+import net.minecraft.server.v1_7_R3.EntityVillager;
 import net.minecraft.server.v1_7_R3.EntityZombie;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
 
 public enum CustomEntity {
 
-    ZOMBIE("Zombie " + ChatColor.GREEN + "Lv1", 54, EntityType.ZOMBIE, EntityZombie.class, CrippledZombie1.class),
-    IRONGUARD("Iron Guard" + ChatColor.DARK_RED + "Lv 55", 99, EntityType.IRON_GOLEM, EntityIronGolem.class, CustomGuard.class);
+    ZOMBIE("Zombie " + ChatColor.GREEN + "Lv1", 54, null, EntityZombie.class, CrippledZombie1.class),
+    ELITEZOMBIELV3("EliteZombieLv3", 54, null, EntityZombie.class, EliteZombieLv3.class),
+    IRONGUARD("Iron Guard" + ChatColor.DARK_RED + "Lv 55", 99, null, EntityIronGolem.class, CustomGuard.class),
+    VILLAGER1("Weaponsmith" + ChatColor.GREEN + "Lv 10", 120, null, EntityVillager.class, Villager1.class),
+    MOUNT("Mount", 100, null, EntityHorse.class, HorseMount.class);
 
     private String name;
     private int id;

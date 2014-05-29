@@ -6,17 +6,14 @@
 package com.RPGMakerDev.RPGMaker.EntityData;
 
 import java.lang.reflect.Field;
-import net.minecraft.server.v1_7_R3.EntityHuman;
-import net.minecraft.server.v1_7_R3.EntityIronGolem;
-import net.minecraft.server.v1_7_R3.GenericAttributes;
-import net.minecraft.server.v1_7_R3.PathfinderGoalLookAtPlayer;
+import net.minecraft.server.v1_7_R3.EntityVillager;
 import net.minecraft.server.v1_7_R3.PathfinderGoalSelector;
 import net.minecraft.server.v1_7_R3.World;
 import org.bukkit.craftbukkit.v1_7_R3.util.UnsafeList;
 
-public class CustomGuard extends EntityIronGolem {
+public class Villager1 extends EntityVillager {
 
-    public CustomGuard(World world) {
+    public Villager1(World world) {
         super(world);
 
         try {
@@ -33,15 +30,6 @@ public class CustomGuard extends EntityIronGolem {
 // This means that the name of one of the fields changed names or declaration and will have to be re-examined.
         }
 
-        this.goalSelector.a(1, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
     }
 
-    @Override
-    public boolean aD() {
-        super.aD();
-        this.getAttributeInstance(GenericAttributes.e).setValue(50.0D); // Original 3.0D
-        this.getAttributeInstance(GenericAttributes.d).setValue(1.0D);
-        this.getAttributeInstance(GenericAttributes.a).setValue(5000.0D);
-        return true;
-    }
 }
