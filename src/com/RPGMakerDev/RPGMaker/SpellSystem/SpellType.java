@@ -1,16 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.RPGMakerDev.RPGMaker.SpellSystem;
 
-/**
- *
- * @author matthew
- */
+import org.bukkit.entity.Entity;
+
 public class SpellType {
+
+    public void applySpell(Entity target, Entity caster) {
+        // TODO Auto-generated method stub       
+    }
+
     /*public static enum EffectType {
         DAMAGE_OVER_TIME,
         HEAL_OVER_TIME,
@@ -31,5 +28,9 @@ public class SpellType {
             }
             return null;
         }
+    }*/
+    
+    /*public void doSpell() {
+        return;
     }*/
 }

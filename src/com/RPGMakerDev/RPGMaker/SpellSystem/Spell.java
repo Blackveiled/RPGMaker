@@ -1,7 +1,6 @@
 package com.RPGMakerDev.RPGMaker.SpellSystem;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -33,11 +32,19 @@ public class Spell {
         this.caster = (LivingEntity)caster;
     }
     
+    public Spell(SpellEffect[] effects, SpellType[] types, Entity caster) {
+        this.effects = effects;
+        this.types = types;
+        this.caster = (LivingEntity)caster;
+        this.target = (LivingEntity)caster;
+        this.range = -1;
+    }
+    
     /*
      * Returns true if ran correctly else false
      */
     public boolean castSpell() {
-        if (range*range >= getDistance(target, caster)) {
+        if (range == -1 || ((range*range) >= getDistance(target, caster))) {
             //Target is in range
             for (int i = 0; i < effects.length; i++) {
                 if (effects[i].getSelf())
@@ -64,23 +71,7 @@ public class Spell {
      * Helper function for each SpellType
      */
     private void castType(SpellType spell) {
-        Damageable tar = (Damageable)target; 
-        if (spell instanceof DamageType) {
-            double damage = tar.getHealth() - ((DamageType)spell).getDamage();
-            double setDamage = damage < 0 ? 0 : damage;
-            tar.setHealth(setDamage);
-        }
-        else if (spell instanceof HealType) {
-            double heal = tar.getHealth() + ((HealType)spell).getHeal();
-            double setHeal = heal > tar.getMaxHealth() ? tar.getMaxHealth() : heal;
-            tar.setHealth(setHeal);
-        }
-        else if (spell instanceof DOTType) {
-            ((DOTType)spell).applyDamage(target, caster);
-        }
-        else if (spell instanceof HOTType) {
-            ((HOTType)spell).applyHeal(target, caster);
-        }
+        spell.applySpell(target, caster);
         
         return;
     }

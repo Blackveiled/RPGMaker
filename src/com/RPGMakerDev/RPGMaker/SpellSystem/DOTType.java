@@ -28,7 +28,8 @@ public class DOTType extends SpellType {
     /*
      * Sets up the scheduler to apply the damage to the target
      */
-    public void applyDamage(Entity target, Entity caster) {
+    @Override
+    public void applySpell(Entity target, Entity caster) {
         Plugin plugin = RPGMaker.getPlugin(RPGMaker.class);
         final Damageable tar = (Damageable)target;
         

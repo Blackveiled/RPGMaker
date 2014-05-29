@@ -1,5 +1,8 @@
 package com.RPGMakerDev.RPGMaker.SpellSystem;
 
+import org.bukkit.entity.Damageable;
+import org.bukkit.entity.Entity;
+
 public class DamageType extends SpellType {
     double damage;
     
@@ -15,5 +18,13 @@ public class DamageType extends SpellType {
      */
     public double getDamage() {
         return damage;
+    }
+    
+    @Override
+    public void applySpell(Entity target, Entity caster) {
+        Damageable tar = (Damageable)target; 
+        double newDamage = tar.getHealth() - damage;
+        double setDamage = newDamage < 0 ? 0 : newDamage;
+        tar.setHealth(setDamage);
     }
 }
