@@ -7,6 +7,7 @@ package com.RPGMakerDev.RPGMaker;
 
 import com.RPGMakerDev.RPGMaker.Commands.CommandGuild;
 import com.RPGMakerDev.RPGMaker.Commands.CommandRPGMaker;
+import com.RPGMakerDev.RPGMaker.Commands.SetGraveyard;
 import com.RPGMakerDev.RPGMaker.Commands.help;
 import com.RPGMakerDev.RPGMaker.Commands.item;
 import com.RPGMakerDev.RPGMaker.Commands.socialManager;
@@ -14,6 +15,7 @@ import com.RPGMakerDev.RPGMaker.EntityData.CustomEntity;
 import com.RPGMakerDev.RPGMaker.EntityData.EntityDatas;
 import com.RPGMakerDev.RPGMaker.EntityData.RPGEntity;
 import com.RPGMakerDev.RPGMaker.Events.RPGPlayerJoinServer;
+import com.RPGMakerDev.RPGMaker.Graveyard.Graveyard;
 import com.RPGMakerDev.RPGMaker.Social.SocialManager;
 import static com.RPGMakerDev.RPGMaker.Social.SocialManager.Global;
 import com.RPGMakerDev.RPGMaker.Social.SocialPlayer;
@@ -37,7 +39,10 @@ public class RPGMaker extends JavaPlugin {
     private static boolean debugMode = true;
     public static String serverName;
     public static String serverDescription;
-
+    
+    //Graveyard plugin
+    public static Graveyard gy;
+    
     // MySQL Database Information
     public static String hostname;
     public static String username;
@@ -51,6 +56,8 @@ public class RPGMaker extends JavaPlugin {
         Bukkit.broadcastMessage(ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "RPGMaker" + ChatColor.DARK_GRAY + "] The system is reloading, please relog upon completion.");
         CustomEntity.unregisterEntities();
 
+        //For graveyard plugin
+        gy.saveGraveyards();
     }
 
     @Override
@@ -74,8 +81,8 @@ public class RPGMaker extends JavaPlugin {
         this.getCommand("socialmanager").setExecutor(new socialManager());
         this.getCommand("guild").setExecutor(new CommandGuild());
         this.getCommand("help").setExecutor(new help());
-        this.getCommand("item").setExecutor(new item());
-
+        this.getCommand("setgy").setExecutor(new SetGraveyard());
+        
         try {
             Database getEntityData = new Database();
             String Query = "SELECT * FROM `creatures`";
