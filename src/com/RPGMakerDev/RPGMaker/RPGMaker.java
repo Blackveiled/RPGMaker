@@ -7,6 +7,7 @@ package com.RPGMakerDev.RPGMaker;
 
 import com.RPGMakerDev.RPGMaker.Commands.CommandGuild;
 import com.RPGMakerDev.RPGMaker.Commands.CommandRPGMaker;
+import com.RPGMakerDev.RPGMaker.Commands.SetGraveyard;
 import com.RPGMakerDev.RPGMaker.Commands.help;
 import com.RPGMakerDev.RPGMaker.Commands.item;
 import com.RPGMakerDev.RPGMaker.Commands.mount;
@@ -47,7 +48,10 @@ public class RPGMaker extends JavaPlugin {
     private static boolean debugMode = true;
     public static String serverName;
     public static String serverDescription;
-
+    
+    //Graveyard plugin
+    public static Graveyard gy;
+    
     // MySQL Database Information
     public static String hostname;
     public static String username;
@@ -70,6 +74,8 @@ public class RPGMaker extends JavaPlugin {
         while (iterator.hasNext()) {
         }
 
+        //For graveyard plugin
+        gy.saveGraveyards();
     }
 
     @Override

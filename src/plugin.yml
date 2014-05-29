@@ -39,3 +39,8 @@ commands:
         usage: /item <id>
         permission: rpgmaker.give
         permission-message: You do not have permission to use this command.
+    setgy:
+        description: Sets a graveyard at your location
+        usage: /setgy
+        permission: rpgmaker.gy
+        permission-message: You do not have permission to use this command.

@@ -1,10 +1,17 @@
 package com.RPGMakerDev.RPGMaker.SpellSystem;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitScheduler;
+
+import com.RPGMakerDev.RPGMaker.RPGMaker;
 
 public class StatType extends SpellType {
     private String stat;
     private double amount;
+    private int duration;
     /*
      * Health, mana, strength, agility, intelligence, vitality, resilience,
      * critical chance, spell critical chance, dodge chance, resist chance,
@@ -12,12 +19,29 @@ public class StatType extends SpellType {
      */
     
     /*
-     * Stat   - String of which stat to effect
-     * Amount - How much to effect stat by
+     * Stat     - String of which stat to effect
+     * Amount   - How much to effect stat by
+     * Duration - How long this stat change will last, in ticks
      */
-    public StatType(String stat, double amount) {
+    public StatType(String stat, double amount, int duration) {
         this.stat = stat;
         this.amount = amount;
+        this.duration = duration;
+    }
+    
+    public void changeStat(Entity caster) {
+        Player player = (Player)caster;
+        Plugin plugin = RPGMaker.getPlugin(RPGMaker.class);
+        //Change Stat here, stat + amou
+        
+        //Reset stat back after duration
+        BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
+        scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                //set stat back, stat - amount
+            }
+        }, duration);
     }
     
     @Override
