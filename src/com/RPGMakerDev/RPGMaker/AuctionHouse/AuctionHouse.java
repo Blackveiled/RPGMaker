@@ -42,7 +42,6 @@ public class AuctionHouse {
     private Player player;            //The player...
     private final int SIZE = 54;      //Double chest size, for reference
     private ItemStack nextpage;       //nextpage item to click
-    private ItemStack sortmat;        //sort by material item to click
     private ItemStack sortname;       //sort by name item to click
     private ItemStack sortnew;        //sort by new item to click
     private ItemStack sortold;        //sort by old item to click
@@ -66,11 +65,6 @@ public class AuctionHouse {
         ItemMeta meta = this.nextpage.getItemMeta();
         meta.setDisplayName("Next Page");
         this.nextpage.setItemMeta(meta);
-        
-        this.sortmat = new ItemStack(Material.WOOL);
-        meta = this.sortmat.getItemMeta();
-        meta.setDisplayName("Sort by material");
-        this.sortmat.setItemMeta(meta);
         
         this.sortname = new ItemStack(Material.WOOL);
         meta = this.sortname.getItemMeta();
@@ -105,19 +99,10 @@ public class AuctionHouse {
         Inventory inv = Bukkit.createInventory(null, SIZE, "Auction House");
         inv.addItem(new ItemStack(Material.ICE));
         inv.setItem(SIZE-3, nextpage);
-        inv.setItem(SIZE-4, sortmat);
-        inv.setItem(SIZE-5, sortname);
-        inv.setItem(SIZE-6, sortnew);
-        inv.setItem(SIZE-7, sortold);
+        inv.setItem(SIZE-4, sortname);
+        inv.setItem(SIZE-5, sortnew);
+        inv.setItem(SIZE-6, sortold);
         return inv;
-    }
-    
-    /*
-     * Sorts items by the type the player entered
-     */
-    public void sortByMaterial() {
-        player.sendMessage("Sorting by material");
-        return;
     }
     
     /*
