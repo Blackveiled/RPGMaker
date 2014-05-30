@@ -46,7 +46,7 @@ public class EntityListeners implements Listener {
 
     @EventHandler
     public void onSpawn(CreatureSpawnEvent e) {
-        if (e.getSpawnReason().equals(SpawnReason.NATURAL)) {
+        if (!e.getSpawnReason().equals(SpawnReason.CUSTOM)) {
             e.setCancelled(true);
         }
         if (e.getEntity() instanceof Horse) {

@@ -7,7 +7,7 @@ package com.RPGMakerDev.RPGMaker.EntityData;
 
 import com.RPGMakerDev.RPGMaker.Inventory.RPGInventory;
 import com.RPGMakerDev.RPGMaker.Inventory.RPGItem;
-import com.RPGMakerDev.RPGMaker.Social.Guild;
+import com.RPGMakerDev.RPGMaker.TeamSystem.Guild;
 import com.RPGMakerDev.RPGMaker.StoredData.Database;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -175,7 +175,7 @@ public class RPGEntity {
             BookMeta b = (BookMeta) m;
             List<String> bd = new ArrayList<String>();
             bd.add(getPlayer().getDisplayName() + "'s Character Information");
-            bd.add("Level: 0 Class: Warrior");
+            bd.add("Class:");
             List<String> l = new ArrayList<String>();
             l.add(ChatColor.WHITE + "Use this item to view information about your character.");
             m.setDisplayName(ChatColor.YELLOW + "View Character Sheet");

@@ -10,17 +10,17 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class SocialManager implements Listener {
-    
+
     public static Channel Global;
     public static List<String> chatLog = new ArrayList<String>();
-    
+
     public static enum ChatFormat {
-        
+
         ERROR,
         DEBUG,
         CHATCOLOR,
@@ -35,13 +35,13 @@ public class SocialManager implements Listener {
     public SocialManager() {
         Global = new Channel(1, "Global");
     }
-    
+
     @EventHandler
-    public void smChatEvent(AsyncPlayerChatEvent e) {
+    public void smChatEvent(PlayerChatEvent e) {
         e.setCancelled(true);
         Global.sendMessage(SocialPlayer.getStoredSocialPlayer(e.getPlayer().getUniqueId()), e.getMessage());
     }
-    
+
     @EventHandler
     public void smJoinEvent(PlayerJoinEvent e) {
         e.getPlayer().sendMessage("");
@@ -59,7 +59,7 @@ public class SocialManager implements Listener {
             e.setJoinMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + e.getPlayer().getName() + ChatColor.DARK_GRAY + " has joined the server!");
         }
         if (SocialPlayer.getStoredSocialPlayer(e.getPlayer().getUniqueId()) == null) {
-            
+
             SocialPlayer New = new SocialPlayer(e.getPlayer().getUniqueId());
             Global.joinChannel(New);
             SocialPlayer.socialPlayers.put(e.getPlayer().getUniqueId(), New);
@@ -67,7 +67,7 @@ public class SocialManager implements Listener {
             Global.joinChannel(SocialPlayer.getStoredSocialPlayer(e.getPlayer().getUniqueId()));
         }
     }
-    
+
     @EventHandler
     public void onPlayerQuitEvent(PlayerQuitEvent e) {
         SocialManager.Global.leaveChannel(SocialPlayer.socialPlayers.get(e.getPlayer().getUniqueId()));

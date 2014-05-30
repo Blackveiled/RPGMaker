@@ -13,6 +13,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_7_R3.CraftWorld;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 
 public class spawnmob implements CommandExecutor {
 
@@ -33,7 +34,7 @@ public class spawnmob implements CommandExecutor {
                             guard.setPosition(loc.getX(), loc.getY(), loc.getZ());
                             guard.setCustomName("Iron Guard " + ChatColor.DARK_RED + "Lv55");
                             guard.setCustomNameVisible(true);
-                            world.addEntity(guard);
+                            world.addEntity(guard, CreatureSpawnEvent.SpawnReason.CUSTOM);
                         }
                         break;
 
@@ -43,7 +44,7 @@ public class spawnmob implements CommandExecutor {
                             zombie1.setPosition(loc.getX(), loc.getY(), loc.getZ());
                             zombie1.setCustomName(ChatColor.DARK_RED + "Zombie " + ChatColor.GREEN + "Lv1");
                             zombie1.setCustomNameVisible(true);
-                            world.addEntity(zombie1);
+                            world.addEntity(zombie1, CreatureSpawnEvent.SpawnReason.CUSTOM);
                         }
                         break;
 
@@ -53,7 +54,7 @@ public class spawnmob implements CommandExecutor {
                             villager1.setPosition(loc.getX(), loc.getY(), loc.getZ());
                             villager1.setCustomName(ChatColor.GREEN + "" + ChatColor.BOLD + "Shopkeeper");
                             villager1.setCustomNameVisible(true);
-                            world.addEntity(villager1);
+                            world.addEntity(villager1, CreatureSpawnEvent.SpawnReason.CUSTOM);
                         }
                         break;
                     case "mount":
@@ -62,7 +63,7 @@ public class spawnmob implements CommandExecutor {
                             mount.setPosition(loc.getX(), loc.getY(), loc.getZ());
                             mount.setCustomName(ChatColor.GREEN + p.getName() + "'s Mount ");
                             mount.setCustomNameVisible(true);
-                            world.addEntity(mount);
+                            world.addEntity(mount, CreatureSpawnEvent.SpawnReason.CUSTOM);
                         }
                         break;
                     case "elitezombielv3":
@@ -71,7 +72,7 @@ public class spawnmob implements CommandExecutor {
                             elitezombielv3.setPosition(loc.getX(), loc.getY(), loc.getZ());
                             elitezombielv3.setCustomName(ChatColor.DARK_RED + "Zombie" + ChatColor.GREEN + " Lv3");
                             elitezombielv3.setCustomNameVisible(true);
-                            world.addEntity(elitezombielv3);
+                            world.addEntity(elitezombielv3, CreatureSpawnEvent.SpawnReason.CUSTOM);
                         }
                         break;
                 }

@@ -8,6 +8,7 @@ package com.RPGMakerDev.RPGMaker.Inventory;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockSpreadEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
@@ -22,6 +23,11 @@ public class RPGInventoryListener implements Listener {
     @EventHandler
     public void preventItemPickups(PlayerPickupItemEvent e) {
         e.getPlayer().sendMessage(ChatColor.RED + "Something wrong occured, picking up items is not possible.");
+        e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void grassGrow(BlockSpreadEvent e) {
         e.setCancelled(true);
     }
 }

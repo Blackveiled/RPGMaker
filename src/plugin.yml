@@ -44,3 +44,8 @@ commands:
         usage: /setgy
         permission: rpgmaker.gy
         permission-message: You do not have permission to use this command.
+    warp:
+        description: place to warp
+        usage: /warp
+        permission: rpgmaker.warp
+        permission-message: Nope

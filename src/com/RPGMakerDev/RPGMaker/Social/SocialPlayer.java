@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 public class SocialPlayer {
 
     public static Map<UUID, SocialPlayer> socialPlayers = new HashMap<UUID, SocialPlayer>();
-    public Integer cooldown = 0;
+    public long reputationCooldown;
 
     private UUID UUID;
     private boolean onlineStatus = true;

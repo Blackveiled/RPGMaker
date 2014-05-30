@@ -8,6 +8,7 @@ package com.RPGMakerDev.RPGMaker;
 import com.RPGMakerDev.RPGMaker.Commands.CommandGuild;
 import com.RPGMakerDev.RPGMaker.Commands.CommandRPGMaker;
 import com.RPGMakerDev.RPGMaker.Commands.SetGraveyard;
+import com.RPGMakerDev.RPGMaker.Commands.Warp;
 import com.RPGMakerDev.RPGMaker.Commands.help;
 import com.RPGMakerDev.RPGMaker.Commands.item;
 import com.RPGMakerDev.RPGMaker.Commands.mount;
@@ -50,10 +51,10 @@ public class RPGMaker extends JavaPlugin {
     private static boolean debugMode = true;
     public static String serverName;
     public static String serverDescription;
-    
+
     //Graveyard plugin
     public static Graveyard gy;
-    
+
     // MySQL Database Information
     public static String hostname;
     public static String username;
@@ -101,12 +102,12 @@ public class RPGMaker extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new InteractionListener(), this);
         this.getServer().getPluginManager().registerEvents(new RPGInventoryListener(), this);
         this.getServer().getPluginManager().registerEvents(new LootingListener(), this);
-        
+
         //For graveyard plugin
         this.getServer().getPluginManager().registerEvents(new GraveyardListener(this), this);
         this.gy = new Graveyard();
         this.getCommand("setgy").setExecutor(new SetGraveyard());
-        
+
         this.getCommand("rpgmaker").setExecutor(new CommandRPGMaker());
         this.getCommand("socialmanager").setExecutor(new socialManager());
         this.getCommand("guild").setExecutor(new CommandGuild());
@@ -114,6 +115,8 @@ public class RPGMaker extends JavaPlugin {
         this.getCommand("item").setExecutor(new item());
         this.getCommand("spawnmob").setExecutor(new spawnmob());
         this.getCommand("mount").setExecutor(new mount());
+        this.getCommand("setgy").setExecutor(new SetGraveyard());
+        this.getCommand("warp").setExecutor(new Warp(this));
 
         try {
             Database getEntityData = new Database();
@@ -146,16 +149,7 @@ public class RPGMaker extends JavaPlugin {
             Scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
                 @Override
                 public void run() {
-                    for (RPGEntity entity : RPGEntity.players.values()) {
-                        if (entity.state.requestDuration > 0) {
-                            entity.state.requestDuration = entity.state.requestDuration - 1;
-                        }
-                        if (entity.state.teleportCooldown > 0) {
-                            entity.state.teleportCooldown = entity.state.teleportCooldown - 1;
-                            if (entity.state.teleportCooldown == 0) {
-                            }
-                        }
-                    }
+
                 }
             }, 0L, 20L);
         }

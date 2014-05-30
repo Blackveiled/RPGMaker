@@ -1,7 +1,7 @@
 package com.RPGMakerDev.RPGMaker.Commands;
 
 import com.RPGMakerDev.RPGMaker.EntityData.RPGEntity;
-import com.RPGMakerDev.RPGMaker.Social.Guild;
+import com.RPGMakerDev.RPGMaker.TeamSystem.Guild;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

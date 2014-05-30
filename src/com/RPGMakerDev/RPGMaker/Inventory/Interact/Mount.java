@@ -19,6 +19,7 @@ import org.bukkit.craftbukkit.v1_7_R3.CraftWorld;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class Mount {
@@ -57,7 +58,7 @@ public class Mount {
         mount.setPosition(loc.getX(), loc.getY(), loc.getZ());
         mount.setCustomName(ChatColor.GREEN + Bukkit.getPlayer(uuid).getName() + "'s Mount ");
         mount.setCustomNameVisible(true);
-        world.addEntity(mount);
+        world.addEntity(mount, CreatureSpawnEvent.SpawnReason.CUSTOM);
         this.mountUUID = mount.getBukkitEntity().getUniqueId();
         Bukkit.getPlayer(uuid).sendMessage(ChatColor.GREEN + "Your mount has been summoned!");
         getMountEntity().setPassenger(getOwner());
