@@ -44,6 +44,16 @@ commands:
         usage: /setgy
         permission: rpgmaker.gy
         permission-message: You do not have permission to use this command.
+    auction:
+        description: Puts the item held in your hand into the auction house
+        usage: /auction <cost>
+        permission: rpgmaker.auction
+        permission-message: You do not have permission to use this command.
+    spawnAH:
+        description: Spawns an AH npc where you are standing
+        usage: /spawnAH
+        permission: rpgmaker.spawnAH
+        permission-message: You do not have permission to use this command.
     warp:
         description: place to warp
         usage: /warp
