@@ -10,7 +10,9 @@ import com.RPGMakerDev.RPGMaker.Inventory.RPGItem;
 import com.RPGMakerDev.RPGMaker.RPGMaker;
 import com.RPGMakerDev.RPGMaker.StoredData.Database;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -125,10 +127,17 @@ public class AuctionHouse {
                 int id = this.database.Results.getInt("ITEMID");
                 float dur = this.database.Results.getFloat("DUR");
                 int amount = this.database.Results.getInt("AMOUNT");
+                int cost = this.database.Results.getInt("COST");
                 RPGItem item = new RPGItem(id, 0, dur, amount);
                 item.updateItemLore();
                 item.updateItemMeta();
-                inv.addItem(item.getItemStack());
+                ItemStack addCost = item.getItemStack();
+                ItemMeta meta = addCost.getItemMeta();
+                ArrayList<String> list = (ArrayList<String>) meta.getLore();
+                list.add(ChatColor.GREEN + "Buyout price: " + cost);
+                meta.setLore(list);
+                addCost.setItemMeta(meta);
+                inv.addItem(addCost);
             }
         }
         catch(SQLException e) {
@@ -167,10 +176,17 @@ public class AuctionHouse {
                 int id = this.database.Results.getInt("ITEMID");
                 float dur = this.database.Results.getFloat("DUR");
                 int amount = this.database.Results.getInt("AMOUNT");
+                int cost = this.database.Results.getInt("COST");
                 RPGItem item = new RPGItem(id, amount);
                 item.updateItemLore();
                 item.updateItemMeta();
-                inv.addItem(item.getItemStack());
+               ItemStack addCost = item.getItemStack();
+                ItemMeta meta = addCost.getItemMeta();
+                ArrayList<String> list = (ArrayList<String>) meta.getLore();
+                list.add(ChatColor.GREEN + "Buyout price: " + cost);
+                meta.setLore(list);
+                addCost.setItemMeta(meta);
+                inv.addItem(addCost);
             }
         }
         catch(SQLException e) {
@@ -200,10 +216,17 @@ public class AuctionHouse {
                 int id = this.database.Results.getInt("ITEMID");
                 float dur = this.database.Results.getFloat("DUR");
                 int amount = this.database.Results.getInt("AMOUNT");
+                int cost = this.database.Results.getInt("COST");
                 RPGItem item = new RPGItem(id, 0, dur, amount);
                 item.updateItemLore();
                 item.updateItemMeta();
-                inv.addItem(item.getItemStack());
+                ItemStack addCost = item.getItemStack();
+                ItemMeta meta = addCost.getItemMeta();
+                ArrayList<String> list = (ArrayList<String>) meta.getLore();
+                list.add(ChatColor.GREEN + "Buyout price: " + cost);
+                meta.setLore(list);
+                addCost.setItemMeta(meta);
+                inv.addItem(addCost);
             }
         }
         catch(SQLException e) {
