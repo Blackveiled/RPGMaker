@@ -6,6 +6,7 @@
 
 package com.RPGMakerDev.RPGMaker.AuctionHouse;
 
+import com.RPGMakerDev.RPGMaker.Inventory.RPGItem;
 import com.RPGMakerDev.RPGMaker.RPGMaker;
 import com.RPGMakerDev.RPGMaker.StoredData.Database;
 import java.sql.SQLException;
@@ -121,6 +122,13 @@ public class AuctionHouse {
             this.database.Results = this.database.Query.executeQuery();
             while (this.database.Results.next()) {
                 //Put items into inv to display
+                int id = this.database.Results.getInt("ITEMID");
+                float dur = this.database.Results.getFloat("DUR");
+                int amount = this.database.Results.getInt("AMOUNT");
+                RPGItem item = new RPGItem(id, 0, dur, amount);
+                item.updateItemLore();
+                item.updateItemMeta();
+                inv.addItem(item.getItemStack());
             }
         }
         catch(SQLException e) {
@@ -156,6 +164,13 @@ public class AuctionHouse {
             this.database.Results = this.database.Query.executeQuery();
             while (this.database.Results.next()) {
                 //Put items into inv to display
+                int id = this.database.Results.getInt("ITEMID");
+                float dur = this.database.Results.getFloat("DUR");
+                int amount = this.database.Results.getInt("AMOUNT");
+                RPGItem item = new RPGItem(id, 0, dur, amount);
+                item.updateItemLore();
+                item.updateItemMeta();
+                inv.addItem(item.getItemStack());
             }
         }
         catch(SQLException e) {
@@ -182,6 +197,13 @@ public class AuctionHouse {
             this.database.Results = this.database.Query.executeQuery();
             while (this.database.Results.next()) {
                 //Put items into inv to display
+                int id = this.database.Results.getInt("ITEMID");
+                float dur = this.database.Results.getFloat("DUR");
+                int amount = this.database.Results.getInt("AMOUNT");
+                RPGItem item = new RPGItem(id, 0, dur, amount);
+                item.updateItemLore();
+                item.updateItemMeta();
+                inv.addItem(item.getItemStack());
             }
         }
         catch(SQLException e) {
