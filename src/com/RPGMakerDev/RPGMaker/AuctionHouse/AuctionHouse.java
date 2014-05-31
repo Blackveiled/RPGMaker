@@ -6,6 +6,9 @@
 
 package com.RPGMakerDev.RPGMaker.AuctionHouse;
 
+import com.RPGMakerDev.RPGMaker.RPGMaker;
+import com.RPGMakerDev.RPGMaker.StoredData.Database;
+import java.sql.SQLException;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -19,8 +22,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
-
-import com.RPGMakerDev.RPGMaker.RPGMaker;
 
 /*
  * Item representation
@@ -41,11 +42,13 @@ public class AuctionHouse {
     private int page;                 //What page number the player is on
     private Player player;            //The player...
     private final int SIZE = 54;      //Double chest size, for reference
+    private final int PAGE_SIZE = 45; //How many items to put on a page
     private ItemStack nextpage;       //nextpage item to click
     private ItemStack sortname;       //sort by name item to click
     private ItemStack sortnew;        //sort by new item to click
     private ItemStack sortold;        //sort by old item to click
-    private int ndxDatabase;          //Keep track of where you are at
+    private int sortingType = 0;          //Keep track of sorting
+    private Database database;
     
     /*
      * Set up an auction house for the player
@@ -53,6 +56,7 @@ public class AuctionHouse {
     public AuctionHouse(Player player) {
         this.page = 0;
         this.player = player;
+        database = new Database();
         setupStaticItems();
         
         //Add listener for next page
@@ -86,18 +90,42 @@ public class AuctionHouse {
      * Opens up the first viewing of items for the player
      */
     public void startAuctionHouse() {
-        player.openInventory(getInventory());       
+        player.openInventory(sortByNew());       
     }
     
     /*
      * Helper function to construct the inventory for the player
      * Create inventory, get the items from database
      * corresponding to which page player is on
+     *
+     * sortingType():  0 = sortByNew()
+     *                 1 = sortByOld()
+     *                 2 = sortByName()
      */
     public Inventory getInventory() {
         //player.sendMessage("Getting inventory");
         Inventory inv = Bukkit.createInventory(null, SIZE, "Auction House");
-        inv.addItem(new ItemStack(Material.ICE));
+        try {
+            this.database.getConnection();
+            String Query = "";
+            if (sortingType == 0) {
+                Query = "select * from `auctionhouse` order by `ID` desc limit " + 
+                    PAGE_SIZE + " offset " + (page * PAGE_SIZE);
+            }
+            else if (sortingType == 1) {
+                Query = "select * from `auctionhouse` order by `ID` limit " + 
+                    PAGE_SIZE + " offset " + (page * PAGE_SIZE);
+            }
+            
+            this.database.Query = this.database.connection.prepareStatement(Query);
+            this.database.Results = this.database.Query.executeQuery();
+            while (this.database.Results.next()) {
+                //Put items into inv to display
+            }
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
         inv.setItem(SIZE-3, nextpage);
         inv.setItem(SIZE-4, sortname);
         inv.setItem(SIZE-5, sortnew);
@@ -109,6 +137,7 @@ public class AuctionHouse {
      * Sorts item by the name the player entered
      */
     public void sortByName() {
+        page = 0;
         player.sendMessage("Sorting by name");
         return;
     }
@@ -116,16 +145,54 @@ public class AuctionHouse {
     /*
      * Sorts the listing by newest items auctioned first
      */
-    public void sortByNew() {
+    public Inventory sortByNew() {
+        page = 0;
+        Inventory inv = Bukkit.createInventory(null, SIZE, "Auction House");
+        try {
+            this.database.getConnection();
+            String Query = "select * from `auctionhouse` order by `ID` desc limit " + 
+                    PAGE_SIZE + " offset " + (page * PAGE_SIZE);
+            this.database.Query = this.database.connection.prepareStatement(Query);
+            this.database.Results = this.database.Query.executeQuery();
+            while (this.database.Results.next()) {
+                //Put items into inv to display
+            }
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+        inv.setItem(SIZE-3, nextpage);
+        inv.setItem(SIZE-4, sortname);
+        inv.setItem(SIZE-5, sortnew);
+        inv.setItem(SIZE-6, sortold);
         player.sendMessage("Sorting by newest");
-        return;
+        return inv;
     }
     /*
      * Sorts the listing by oldest items auctioned first
      */
-    public void sortByOld() {
+    public Inventory sortByOld() {
+        page = 0;
+        Inventory inv = Bukkit.createInventory(null, SIZE, "Auction House");
+        try {
+            this.database.getConnection();
+            String Query = "select * from `auctionhouse` order by `ID` limit " + 
+                    PAGE_SIZE + " offset " + (page * PAGE_SIZE);
+            this.database.Query = this.database.connection.prepareStatement(Query);
+            this.database.Results = this.database.Query.executeQuery();
+            while (this.database.Results.next()) {
+                //Put items into inv to display
+            }
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
+        inv.setItem(SIZE-3, nextpage);
+        inv.setItem(SIZE-4, sortname);
+        inv.setItem(SIZE-5, sortnew);
+        inv.setItem(SIZE-6, sortold);
         player.sendMessage("Sorting by oldest");
-        return;
+        return inv;
     }
     
     /*
@@ -138,18 +205,41 @@ public class AuctionHouse {
             if (event.getInventory().getTitle().equals("Auction House")) {
                 System.out.println(player.getName() + " " + page);
                 if (event.getClick().equals(ClickType.SHIFT_LEFT)) {
+                    Plugin plugin = RPGMaker.getPlugin(RPGMaker.class);
+                    boolean flag = true;
+                    Inventory inv = null;
+                    
                     if (event.getCurrentItem().equals(nextpage)) {
                         //Get next page
                         player.sendMessage("Getting next page");
-                        
-                        Plugin plugin = RPGMaker.getPlugin(RPGMaker.class);
+                        page++;
+                        inv = getInventory();
+                    }
+                    else if (event.getCurrentItem().equals(sortname)) {
+                        sortingType = 2;
+                        sortByName();
+                    }
+                    else if (event.getCurrentItem().equals(sortnew)) {
+                        sortingType = 0;
+                        inv = sortByNew();
+                    }
+                    else if (event.getCurrentItem().equals(sortold)) {
+                        sortingType = 1;
+                        inv = sortByOld();
+                    }
+                    else {
+                        flag = false;
+                        player.sendMessage("You are trying to buy something");
+                    }
+                    final Inventory savedInv = inv;
+                    if (flag) {
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                player.closeInventory();
-                                player.openInventory(getInventory());
-                            }
-                        }, 2);
+                                @Override
+                                public void run() {
+                                    player.closeInventory();
+                                    player.openInventory(savedInv);
+                                }
+                            }, 2);
                     }
                 }
                 event.setCancelled(true);           
@@ -163,7 +253,6 @@ public class AuctionHouse {
                 System.out.println("I am closed");
                 HandlerList.unregisterAll(this);
             }
-            return;
         }
     }
 }
