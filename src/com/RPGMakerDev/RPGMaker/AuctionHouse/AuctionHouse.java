@@ -167,7 +167,7 @@ public class AuctionHouse {
                 int id = this.database.Results.getInt("ITEMID");
                 float dur = this.database.Results.getFloat("DUR");
                 int amount = this.database.Results.getInt("AMOUNT");
-                RPGItem item = new RPGItem(id, 0, dur, amount);
+                RPGItem item = new RPGItem(id, amount);
                 item.updateItemLore();
                 item.updateItemMeta();
                 inv.addItem(item.getItemStack());
@@ -225,7 +225,6 @@ public class AuctionHouse {
         public void NextPageEvent(InventoryClickEvent event) {
             //Get next items when next page item is clicked
             if (event.getInventory().getTitle().equals("Auction House")) {
-                System.out.println(player.getName() + " " + page);
                 if (event.getClick().equals(ClickType.SHIFT_LEFT)) {
                     Plugin plugin = RPGMaker.getPlugin(RPGMaker.class);
                     boolean flag = true;
@@ -254,14 +253,15 @@ public class AuctionHouse {
                         player.sendMessage("You are trying to buy something");
                     }
                     final Inventory savedInv = inv;
+                    final Inventory oldInv = event.getInventory();
                     if (flag) {
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                                 @Override
                                 public void run() {
-                                    player.closeInventory();
-                                    player.openInventory(savedInv);
+                                    //player.closeInventory();
+                                    oldInv.setContents(savedInv.getContents());
                                 }
-                            }, 2);
+                            }, 1);
                     }
                 }
                 event.setCancelled(true);           

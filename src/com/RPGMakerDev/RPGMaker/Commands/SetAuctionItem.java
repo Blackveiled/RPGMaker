@@ -7,10 +7,13 @@
 package com.RPGMakerDev.RPGMaker.Commands;
 
 import com.RPGMakerDev.RPGMaker.StoredData.Database;
+
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -60,27 +63,28 @@ public class SetAuctionItem implements CommandExecutor {
         try {
             int id = 1, bytes = 0;
             this.database.getConnection();
-            String Query = "select ITEMID, BYTE from `items` where `ITEMNAME` = '" + name + "';";
+            String Query = "select ID, BYTE from `items` where `ITEMNAME` = '" + name + "';";
             this.database.Query = this.database.connection.prepareStatement(Query);
             this.database.Results = this.database.Query.executeQuery();
             while (this.database.Results.next()) {
-                id = this.database.Results.getInt("ITEMID");
+                id = this.database.Results.getInt("ID");
                 bytes = this.database.Results.getInt("BYTE");
             }
             //Date date = new Date();
             Calendar calendar = new GregorianCalendar();
-            //Date date = calendar.getTime();
-            SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
-            String start = format.format(calendar);
+            Date date = calendar.getTime();
+            SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:MM:ss");
+            String start = format.format(date);
             calendar.add(Calendar.HOUR, 12);
-            String end = format.format(calendar);
+            date = calendar.getTime();
+            String end = format.format(date);
             
             Query = "insert into `auctionhouse` (`SELLER`, `COST`, `START`, `END`,"
                     + " `ITEMID`, `BYTE`, `AMOUNT`)"
-                    + " values ('"+player.getUniqueId()+"', " +cost+ ", " + "'"
-                    + start + "', '" +end+ "', " +id+ ", " +bytes+ ", " +item.getAmount() + ";";
+                    + " values ('"+player.getUniqueId().toString()+"', " +cost+ ", " + "'"
+                    + start + "', '" +end+ "', " +id+ ", " +bytes+ ", " +item.getAmount()+ ");";
             this.database.Query = this.database.connection.prepareStatement(Query);
-            this.database.Results = this.database.Query.executeQuery();
+            this.database.Query.execute();
         }
         catch(SQLException e) {
             e.printStackTrace();
