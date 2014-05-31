@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -55,6 +56,7 @@ public class SetAuctionItem implements CommandExecutor {
     private void saveItem(Player player, ItemStack item, int cost) {
         ItemMeta meta = item.getItemMeta();
         String name = meta.getDisplayName();
+        name = ChatColor.stripColor(name);
         try {
             int id = 1, bytes = 0;
             this.database.getConnection();
@@ -76,7 +78,7 @@ public class SetAuctionItem implements CommandExecutor {
             Query = "insert into `auctionhouse` (`SELLER`, `COST`, `START`, `END`,"
                     + " `ITEMID`, `BYTE`, `AMOUNT`)"
                     + " values ('"+player.getUniqueId()+"', " +cost+ ", " + "'"
-                    + start + "', '" +end+ "', " +id+ ", " +bytes+ ", " +item.getAmount();
+                    + start + "', '" +end+ "', " +id+ ", " +bytes+ ", " +item.getAmount() + ";";
             this.database.Query = this.database.connection.prepareStatement(Query);
             this.database.Results = this.database.Query.executeQuery();
         }
