@@ -60,7 +60,7 @@ public class SetAuctionItem implements CommandExecutor {
         try {
             int id = 1, bytes = 0;
             this.database.getConnection();
-            String Query = "select ITEMID, BYTE from `items` where `ITEMNAME` =" + name + ";";
+            String Query = "select ITEMID, BYTE from `items` where `ITEMNAME` = '" + name + "';";
             this.database.Query = this.database.connection.prepareStatement(Query);
             this.database.Results = this.database.Query.executeQuery();
             while (this.database.Results.next()) {
