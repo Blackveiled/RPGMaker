@@ -5,9 +5,12 @@
  */
 package com.RPGMakerDev.RPGMaker;
 
+import com.RPGMakerDev.RPGMaker.AuctionHouse.OpenAHListener;
 import com.RPGMakerDev.RPGMaker.Commands.CommandGuild;
 import com.RPGMakerDev.RPGMaker.Commands.CommandRPGMaker;
+import com.RPGMakerDev.RPGMaker.Commands.SetAuctionItem;
 import com.RPGMakerDev.RPGMaker.Commands.SetGraveyard;
+import com.RPGMakerDev.RPGMaker.Commands.SpawnAuctionHouse;
 import com.RPGMakerDev.RPGMaker.Commands.Warp;
 import com.RPGMakerDev.RPGMaker.Commands.help;
 import com.RPGMakerDev.RPGMaker.Commands.item;
@@ -107,6 +110,10 @@ public class RPGMaker extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new GraveyardListener(this), this);
         this.gy = new Graveyard();
         this.getCommand("setgy").setExecutor(new SetGraveyard());
+        //For AH system
+        this.getServer().getPluginManager().registerEvents(new OpenAHListener(this), this);
+        this.getCommand("spawnAH").setExecutor(new SpawnAuctionHouse());
+        this.getCommand("auction").setExecutor(new SetAuctionItem());
 
         this.getCommand("rpgmaker").setExecutor(new CommandRPGMaker());
         this.getCommand("socialmanager").setExecutor(new socialManager());
