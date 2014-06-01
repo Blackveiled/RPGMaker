@@ -243,5 +243,11 @@ public class RPGEntity {
     public void sendMessage(String message) {
         getPlayer().sendMessage(message);
     }
-
+    
+    public void addMoney(int value) {
+        gold += value;
+    }
+    public void subtractMoney(int value) {
+        gold -= value;
+    }
 }

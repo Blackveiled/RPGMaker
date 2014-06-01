@@ -310,20 +310,21 @@ public class AuctionHouse {
                         player.sendMessage("You are trying to buy something");
                         //Real time updates? -> need to update every viewer of AH
                         ItemStack item = event.getCurrentItem();
-                        item = removeAuctionLore(item);
-                        System.out.println(event.getRawSlot());
-                        int id = ids.get(event.getRawSlot());
-                        
-                        try {
-                            String Query = "delete from `auctionhouse` where `ID` = " + id + ";";
-                            database.Query = database.connection.prepareStatement(Query);
-                            database.Query.execute();
-                            player.getInventory().addItem(item);
-                            player.closeInventory(); //for now until I handle realtime updates
-                                                                            //and economy
-                        }
-                        catch (SQLException e) {
-                            e.printStackTrace();
+                        if (!(item.getType().equals(Material.AIR))) {
+                            item = removeAuctionLore(item);
+                            int id = ids.get(event.getRawSlot());
+
+                            try {
+                                String Query = "delete from `auctionhouse` where `ID` = " + id + ";";
+                                database.Query = database.connection.prepareStatement(Query);
+                                database.Query.execute();
+                                player.getInventory().addItem(item);
+                                player.closeInventory(); //for now until I handle realtime updates
+                                                                                //and economy
+                            }
+                            catch (SQLException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                     final Inventory savedInv = inv;

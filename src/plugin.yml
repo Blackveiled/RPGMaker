@@ -54,6 +54,11 @@ commands:
         usage: /spawnAH
         permission: rpgmaker.spawnAH
         permission-message: You do not have permission to use this command.
+    e:
+        description: Provides economy commands
+        usage: /e
+        permission: rpgmaker.economy
+        permission-message: You do not have permission to use this command.
     warp:
         description: place to warp
         usage: /warp

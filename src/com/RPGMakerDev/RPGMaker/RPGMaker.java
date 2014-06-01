@@ -8,6 +8,7 @@ package com.RPGMakerDev.RPGMaker;
 import com.RPGMakerDev.RPGMaker.AuctionHouse.OpenAHListener;
 import com.RPGMakerDev.RPGMaker.Commands.CommandGuild;
 import com.RPGMakerDev.RPGMaker.Commands.CommandRPGMaker;
+import com.RPGMakerDev.RPGMaker.Commands.EconomyCommands;
 import com.RPGMakerDev.RPGMaker.Commands.SetAuctionItem;
 import com.RPGMakerDev.RPGMaker.Commands.SetGraveyard;
 import com.RPGMakerDev.RPGMaker.Commands.SpawnAuctionHouse;
@@ -124,6 +125,7 @@ public class RPGMaker extends JavaPlugin {
         this.getCommand("mount").setExecutor(new mount());
         this.getCommand("setgy").setExecutor(new SetGraveyard());
         this.getCommand("warp").setExecutor(new Warp(this));
+        this.getCommand("e").setExecutor(new EconomyCommands());
 
         try {
             Database getEntityData = new Database();
