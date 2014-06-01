@@ -85,6 +85,9 @@ public class SetAuctionItem implements CommandExecutor {
                     + start + "', '" +end+ "', " +id+ ", " +bytes+ ", " +item.getAmount()+ ");";
             this.database.Query = this.database.connection.prepareStatement(Query);
             this.database.Query.execute();
+            
+            this.database.Query.close();
+            this.database.Results.close();
         }
         catch(SQLException e) {
             e.printStackTrace();

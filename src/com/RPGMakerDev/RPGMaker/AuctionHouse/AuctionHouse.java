@@ -57,14 +57,20 @@ public class AuctionHouse {
      * Set up an auction house for the player
      */
     public AuctionHouse(Player player) {
-        this.page = 0;
-        this.player = player;
-        database = new Database();
-        setupStaticItems();
-        
-        //Add listener for next page
-        RPGMaker plugin = RPGMaker.getPlugin(RPGMaker.class);
-        plugin.getServer().getPluginManager().registerEvents(new AuctionHouseListener(), plugin);
+        try {
+            this.page = 0;
+            this.player = player;
+            this.database = new Database();
+            this.database.getConnection();
+            setupStaticItems();
+
+            //Add listener for next page
+            RPGMaker plugin = RPGMaker.getPlugin(RPGMaker.class);
+            plugin.getServer().getPluginManager().registerEvents(new AuctionHouseListener(), plugin);
+        }
+        catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
     
     private void setupStaticItems() {
@@ -109,7 +115,7 @@ public class AuctionHouse {
         //player.sendMessage("Getting inventory");
         Inventory inv = Bukkit.createInventory(null, SIZE, "Auction House");
         try {
-            this.database.getConnection();
+            //this.database.getConnection();
             String Query = "";
             if (sortingType == 0) {
                 Query = "select * from `auctionhouse` order by `ID` desc limit " + 
@@ -139,6 +145,8 @@ public class AuctionHouse {
                 addCost.setItemMeta(meta);
                 inv.addItem(addCost);
             }
+            this.database.Query.close();
+            this.database.Results.close();
         }
         catch(SQLException e) {
             e.printStackTrace();
@@ -166,7 +174,7 @@ public class AuctionHouse {
         page = 0;
         Inventory inv = Bukkit.createInventory(null, SIZE, "Auction House");
         try {
-            this.database.getConnection();
+            //this.database.getConnection();
             String Query = "select * from `auctionhouse` order by `ID` desc limit " + 
                     PAGE_SIZE + " offset " + (page * PAGE_SIZE);
             this.database.Query = this.database.connection.prepareStatement(Query);
@@ -188,6 +196,8 @@ public class AuctionHouse {
                 addCost.setItemMeta(meta);
                 inv.addItem(addCost);
             }
+            this.database.Query.close();
+            this.database.Results.close();
         }
         catch(SQLException e) {
             e.printStackTrace();
@@ -206,7 +216,7 @@ public class AuctionHouse {
         page = 0;
         Inventory inv = Bukkit.createInventory(null, SIZE, "Auction House");
         try {
-            this.database.getConnection();
+            //this.database.getConnection();
             String Query = "select * from `auctionhouse` order by `ID` limit " + 
                     PAGE_SIZE + " offset " + (page * PAGE_SIZE);
             this.database.Query = this.database.connection.prepareStatement(Query);
@@ -228,6 +238,8 @@ public class AuctionHouse {
                 addCost.setItemMeta(meta);
                 inv.addItem(addCost);
             }
+            this.database.Query.close();
+            this.database.Results.close();
         }
         catch(SQLException e) {
             e.printStackTrace();
