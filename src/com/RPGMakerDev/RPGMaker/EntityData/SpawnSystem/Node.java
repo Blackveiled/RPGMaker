@@ -34,7 +34,7 @@ public class Node {
     private long despawnTime;      // The time the Node became inactive.
     private boolean Active = true;    // If the Node is currently spawned, set to true.
     private boolean isEnabled = true; // To completely disable this node (stop respawning), set to false.
-
+    
     public Node(World world, double X, double Y, double Z) {
         this.world = world;
         this.X = X;
@@ -105,5 +105,24 @@ public class Node {
         }
         return location;
     }
+    
+    public double getX() {
+        return X;
+    }
+    
+    public double getY() {
+        return Y;
+    }
 
+    public double getZ() {
+        return Z;
+    }
+    
+    public float getYaw() {
+        return YAW;
+    }
+    
+    public float getPitch() {
+        return PITCH;
+    }
 }
