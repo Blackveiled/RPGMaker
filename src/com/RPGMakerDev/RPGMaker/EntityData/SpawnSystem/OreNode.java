@@ -47,7 +47,7 @@ public class OreNode extends Node {
                     public void run() {
                         loc.getBlock().setType(type);
                     }
-                }, 10 * 20);  //Respawn time
+                }, getRespawnDuration());  //Respawn time
     }
     
     public void getLoot(Player player) {

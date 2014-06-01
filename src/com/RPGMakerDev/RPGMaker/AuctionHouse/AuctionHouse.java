@@ -52,6 +52,7 @@ public class AuctionHouse {
     private ItemStack sortold;        //sort by old item to click
     private int sortingType = 0;          //Keep track of sorting
     private Database database;
+    private ArrayList<Integer> ids;
     
     /*
      * Set up an auction house for the player
@@ -62,6 +63,7 @@ public class AuctionHouse {
             this.player = player;
             this.database = new Database();
             this.database.getConnection();
+            ids = new ArrayList<Integer>();
             setupStaticItems();
 
             //Add listener for next page
@@ -130,11 +132,13 @@ public class AuctionHouse {
             this.database.Results = this.database.Query.executeQuery();
             while (this.database.Results.next()) {
                 //Put items into inv to display
-                int id = this.database.Results.getInt("ITEMID");
+                int itemid = this.database.Results.getInt("ITEMID");
                 float dur = this.database.Results.getFloat("DUR");
                 int amount = this.database.Results.getInt("AMOUNT");
                 int cost = this.database.Results.getInt("COST");
-                RPGItem item = new RPGItem(id, 0, dur, amount);
+                int id = this.database.Results.getInt("ID");
+                ids.add(id);
+                RPGItem item = new RPGItem(itemid, 0, dur, amount);
                 item.updateItemLore();
                 item.updateItemMeta();
                 ItemStack addCost = item.getItemStack();
@@ -181,11 +185,13 @@ public class AuctionHouse {
             this.database.Results = this.database.Query.executeQuery();
             while (this.database.Results.next()) {
                 //Put items into inv to display
-                int id = this.database.Results.getInt("ITEMID");
+                int itemid = this.database.Results.getInt("ITEMID");
                 float dur = this.database.Results.getFloat("DUR");
                 int amount = this.database.Results.getInt("AMOUNT");
                 int cost = this.database.Results.getInt("COST");
-                RPGItem item = new RPGItem(id, amount);
+                int id = this.database.Results.getInt("ID");
+                ids.add(id);
+                RPGItem item = new RPGItem(itemid, amount);
                 item.updateItemLore();
                 item.updateItemMeta();
                ItemStack addCost = item.getItemStack();
@@ -223,11 +229,13 @@ public class AuctionHouse {
             this.database.Results = this.database.Query.executeQuery();
             while (this.database.Results.next()) {
                 //Put items into inv to display
-                int id = this.database.Results.getInt("ITEMID");
+                int itemid = this.database.Results.getInt("ITEMID");
                 float dur = this.database.Results.getFloat("DUR");
                 int amount = this.database.Results.getInt("AMOUNT");
                 int cost = this.database.Results.getInt("COST");
-                RPGItem item = new RPGItem(id, 0, dur, amount);
+                int id = this.database.Results.getInt("ID");
+                ids.add(id);
+                RPGItem item = new RPGItem(itemid, 0, dur, amount);
                 item.updateItemLore();
                 item.updateItemMeta();
                 ItemStack addCost = item.getItemStack();
@@ -252,6 +260,16 @@ public class AuctionHouse {
         return inv;
     }
     
+    private ItemStack removeAuctionLore(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        ArrayList<String> list = (ArrayList<String>) meta.getLore();
+        list.remove(list.size()-1);
+        meta.setLore(list);
+        item.setItemMeta(meta);
+        
+        return item;
+    }
+    
     /*
      * Class that implements listeners for the auction house
      */
@@ -269,23 +287,44 @@ public class AuctionHouse {
                         //Get next page
                         player.sendMessage("Getting next page");
                         page++;
+                        ids.clear();
                         inv = getInventory();
                     }
                     else if (event.getCurrentItem().equals(sortname)) {
                         sortingType = 2;
+                        ids.clear();
                         sortByName();
                     }
                     else if (event.getCurrentItem().equals(sortnew)) {
                         sortingType = 0;
+                        ids.clear();
                         inv = sortByNew();
                     }
                     else if (event.getCurrentItem().equals(sortold)) {
                         sortingType = 1;
+                        ids.clear();
                         inv = sortByOld();
                     }
                     else {
                         flag = false;
                         player.sendMessage("You are trying to buy something");
+                        //Real time updates? -> need to update every viewer of AH
+                        ItemStack item = event.getCurrentItem();
+                        item = removeAuctionLore(item);
+                        System.out.println(event.getRawSlot());
+                        int id = ids.get(event.getRawSlot());
+                        
+                        try {
+                            String Query = "delete from `auctionhouse` where `ID` = " + id + ";";
+                            database.Query = database.connection.prepareStatement(Query);
+                            database.Query.execute();
+                            player.getInventory().addItem(item);
+                            player.closeInventory(); //for now until I handle realtime updates
+                                                                            //and economy
+                        }
+                        catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                     }
                     final Inventory savedInv = inv;
                     final Inventory oldInv = event.getInventory();
