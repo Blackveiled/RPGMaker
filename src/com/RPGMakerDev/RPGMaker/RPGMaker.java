@@ -24,6 +24,8 @@ import com.RPGMakerDev.RPGMaker.EntityData.EntityListeners;
 import com.RPGMakerDev.RPGMaker.EntityData.LootingSystem.LootChest;
 import com.RPGMakerDev.RPGMaker.EntityData.LootingSystem.LootingListener;
 import com.RPGMakerDev.RPGMaker.EntityData.RPGEntity;
+import com.RPGMakerDev.RPGMaker.EntityData.SpawnSystem.OreListener;
+import com.RPGMakerDev.RPGMaker.EntityData.SpawnSystem.OreNode;
 import com.RPGMakerDev.RPGMaker.Events.RPGPlayerJoinServer;
 import com.RPGMakerDev.RPGMaker.Graveyard.Graveyard;
 import com.RPGMakerDev.RPGMaker.Graveyard.GraveyardListener;
@@ -115,6 +117,8 @@ public class RPGMaker extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new OpenAHListener(this), this);
         this.getCommand("spawnAH").setExecutor(new SpawnAuctionHouse());
         this.getCommand("auction").setExecutor(new SetAuctionItem());
+        //For OreNode breaking
+        this.getServer().getPluginManager().registerEvents(new OreListener(this), this);
 
         this.getCommand("rpgmaker").setExecutor(new CommandRPGMaker());
         this.getCommand("socialmanager").setExecutor(new socialManager());
@@ -153,6 +157,8 @@ public class RPGMaker extends JavaPlugin {
 
                 RPGEntity.players.put(p.getUniqueId(), new RPGEntity(p.getUniqueId()));
             }
+            
+            OreNode.getOresDatabase();
 
             BukkitScheduler Scheduler = Bukkit.getScheduler();
             Scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
