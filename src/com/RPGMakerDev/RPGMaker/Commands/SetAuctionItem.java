@@ -6,14 +6,13 @@
 
 package com.RPGMakerDev.RPGMaker.Commands;
 
+import com.RPGMakerDev.RPGMaker.Economy.Economy;
 import com.RPGMakerDev.RPGMaker.StoredData.Database;
-
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -36,6 +35,12 @@ public class SetAuctionItem implements CommandExecutor {
             if (args.length == 1) {
                 try {
                     int cost = Integer.parseInt(args[0]);
+                    Economy e = new Economy(player);
+                    if (e.subtractMoney(cost) == 0) {
+                        e.addMoney(cost);
+                        player.sendMessage("You don't have enough money to auction that");
+                        return true;
+                    }
                     player.sendMessage("You auctioned your item for " + cost);
                     if (player.getItemInHand() != null) {
                         final ItemStack item = player.getItemInHand();

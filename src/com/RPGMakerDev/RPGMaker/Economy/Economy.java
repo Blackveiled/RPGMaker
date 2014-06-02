@@ -25,7 +25,6 @@ public class Economy {
     private final int COPPER_RATE = 1;
     private Player player;
     private UUID uuid;
-    private int money;
     
     public Economy() {
         
@@ -49,8 +48,24 @@ public class Economy {
         return new int[] {gold, silver, copper};
     }
     
+    public int[] convertMoney() {                         //12345
+        int value = getPlayer().gold;
+        int gold = value / GOLD_RATE;                    //1.2345
+        int remaining = value % GOLD_RATE;       //2345
+        int silver = remaining / SILVER_RATE;       //23.45
+        remaining = remaining % SILVER_RATE;  //45
+        int copper = remaining;                                 //45
+        
+        return new int[] {gold, silver, copper};
+    }
+    
     public String getMoneyString(int value) {
         int[] money = convertMoney(value);
+        return "Balance: " + money[0] + "g " + money[1] + "s " + money[2] + "c";
+    }
+    
+    public String getMoneyString() {
+        int[] money = convertMoney();
         return "Balance: " + money[0] + "g " + money[1] + "s " + money[2] + "c";
     }
     
@@ -58,8 +73,8 @@ public class Economy {
         RPGEntity.getRPGPlayer(this.uuid).addMoney(value);
     }
     
-    public void subtractMoney(int value) {
-        RPGEntity.getRPGPlayer(this.uuid).subtractMoney(value);
+    public int subtractMoney(int value) {
+        return RPGEntity.getRPGPlayer(this.uuid).subtractMoney(value);
     }
     
     public RPGEntity getPlayer() {

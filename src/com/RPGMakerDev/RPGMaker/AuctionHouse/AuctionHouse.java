@@ -6,6 +6,7 @@
 
 package com.RPGMakerDev.RPGMaker.AuctionHouse;
 
+import com.RPGMakerDev.RPGMaker.Economy.Economy;
 import com.RPGMakerDev.RPGMaker.Inventory.RPGItem;
 import com.RPGMakerDev.RPGMaker.RPGMaker;
 import com.RPGMakerDev.RPGMaker.StoredData.Database;
@@ -271,6 +272,23 @@ public class AuctionHouse {
     }
     
     /*
+      * Return 0 if player has no money
+      */
+    private int getCost(ItemStack item) {
+        ItemMeta meta = item.getItemMeta();
+        ArrayList<String> list = (ArrayList<String>)meta.getLore();
+        String cost = list.get(list.size()-1);
+        String[] getCost = cost.split(" ");
+        int itemcost = Integer.parseInt(getCost[2]);
+        Economy e = new Economy(player);
+        if (e.subtractMoney(itemcost) == 0) {
+            e.addMoney(itemcost);
+            return 0;
+        }
+        return 1;
+    }
+    
+    /*
      * Class that implements listeners for the auction house
      */
     public class AuctionHouseListener implements Listener {
@@ -311,6 +329,11 @@ public class AuctionHouse {
                         //Real time updates? -> need to update every viewer of AH
                         ItemStack item = event.getCurrentItem();
                         if (!(item.getType().equals(Material.AIR))) {
+                            if (getCost(item) == 0) {
+                                event.setCancelled(true);
+                                return;
+                            }
+                            
                             item = removeAuctionLore(item);
                             int id = ids.get(event.getRawSlot());
 

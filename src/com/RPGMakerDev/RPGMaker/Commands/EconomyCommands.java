@@ -25,7 +25,7 @@ public class EconomyCommands implements CommandExecutor {
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("balance")) {
                 Economy e = new Economy(player);
-                player.sendMessage(e.getMoneyString(e.getPlayer().gold));
+                player.sendMessage(e.getMoneyString());
                 return true;
             }
         }

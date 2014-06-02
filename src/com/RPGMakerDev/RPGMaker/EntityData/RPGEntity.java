@@ -247,7 +247,16 @@ public class RPGEntity {
     public void addMoney(int value) {
         gold += value;
     }
-    public void subtractMoney(int value) {
-        gold -= value;
+    /*
+     *     Returns 1 if not enough money, else 0 
+     */
+    public int subtractMoney(int value) {
+        if (gold - value > 0) {
+            gold -= value;
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
 }
